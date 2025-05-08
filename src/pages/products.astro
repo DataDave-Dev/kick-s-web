@@ -5,6 +5,13 @@ import ProductCard from "../components/ProductCard.astro";
 import { supabase } from "../lib/supabase";
 
 const { data: Productos, error } = await supabase.from("Productos").select("*");
+
+const Money = (value: number) => {
+    return new Intl.NumberFormat("de-DE", {
+        style: "currency",
+        currency: "MXN",
+    }).format(value);
+};
 ---
 
 <Layout>
@@ -20,7 +27,7 @@ const { data: Productos, error } = await supabase.from("Productos").select("*");
                             Producto_id={producto.Producto_id}
                             Producto={producto.Producto}
                             Descripcion={producto.Descripcion}
-                            Precio={producto.Precio}
+                            Precio={Money(producto.Precio)}
                             Cantidad={producto.Cantidad}
                             Imagen={producto.Imagen}
                             Categoria={producto.Categoría}
