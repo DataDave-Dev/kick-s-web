@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionContainer from "../components/SectionContainer.astro";
+import ProductCard from "../components/ProductCard.astro";
+import { supabase } from "../lib/supabase";
+
+const { data: Productos, error } = await supabase.from("Productos").select("*");
+---
+
+<Layout>
+    <SectionContainer>
+        <div
+            class="grid grid-cols-1 py-25 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6"
+        >
+            {
+                Productos && Productos.length > 0 ? (
+                    Productos.map((producto) => (
+                        <ProductCard
+                            key={producto.Producto_id}
+                            Producto_id={producto.Producto_id}
+                            Producto={producto.Producto}
+                            Descripcion={producto.Descripcion}
+                            Precio={producto.Precio}
+                            Cantidad={producto.Cantidad}
+                            Imagen={producto.Imagen}
+                            Categoria={producto.Categoría}
+                            Marca={producto.Marca}
+                            Estilo={producto.Estilo}
+                        />
+                    ))
+                ) : (
+                    <div class="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 text-center">
+                        <p class="text-gray-500">No hay productos disponibles.</p>
+                    </div>
+                )
+            }
+        </div>
+    </SectionContainer>
+</Layout>

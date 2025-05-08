@@ -1,0 +1,33 @@
+---
+const currentUrl = Astro.url.pathname;
+---
+
+<header
+    class="fixed z-10 bg-white w-full flex flex-row justify-between items-center px-12 py-4 shadow-md"
+>
+    <h1 class="text-xl font-bold">
+        <a href="/" aria-label="Inicio"
+            >Kick's
+            <span class="text-red-500">Store</span>
+        </a>
+    </h1>
+
+    <nav class="hidden md:flex">
+        <ul class="flex space-x-4">
+            <li>
+                <a
+                    href="/"
+                    class={`hover:text-red-500 font-semibold ${currentUrl === "/" ? "text-red-500" : ""} transition-all duration-300`}
+                    >Inicio</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/products"
+                    class={`hover:text-red-500 font-semibold ${currentUrl === "/products" ? "text-red-500" : ""} transition-all duration-300`}
+                    >Productos</a
+                >
+            </li>
+        </ul>
+    </nav>
+</header>
