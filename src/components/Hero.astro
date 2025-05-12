@@ -1,28 +1,64 @@
 <div
-    class="relative flex flex-col md:flex-row justify-center items-center bg-gray-100"
+    class="relative flex flex-col md:flex-row justify-center items-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 min-h-[60vh] md:min-h-[70vh] overflow-hidden"
 >
-    <img
-        src="/images/PAR1.jpg"
-        alt="Imagen de un producto destacado"
-        class="w-full md:w-1/2 h-auto object-cover"
-    />
-    <img
-        src="/images/PAR2.jpg"
-        alt="Otra imagen de un producto destacado"
-        class="w-full md:w-1/2 h-auto object-cover"
-    />
+    <div class="w-full md:w-1/2 h-64 md:h-full">
+        <img
+            src="/images/PAR1.jpg"
+            alt="Imagen de un producto destacado"
+            class="w-full h-full object-cover brightness-75 transition-all duration-500 hover:scale-105 hover:brightness-90"
+        />
+    </div>
+    <div class="w-full md:w-1/2 h-64 md:h-full">
+        <img
+            src="/images/PAR2.jpg"
+            alt="Otra imagen de un producto destacado"
+            class="w-full h-full object-cover brightness-75 transition-all duration-500 hover:scale-105 hover:brightness-90"
+        />
+    </div>
     <div
-        class="absolute inset-0 flex flex-col justify-center items-center bg-black/80 bg-opacity-50 text-white text-center p-4"
+        class="absolute inset-0 flex flex-col justify-center items-center bg-gradient-to-b from-black/80 via-black/60 to-black/80 text-white text-center p-6"
     >
-        <h1 class="text-4xl font-bold mb-4">Bienvenido a Kick's Store</h1>
-        <p class="text-lg mb-6">
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg animate-fade-in">
+            Bienvenido a <span class="text-red-500">Kick's Store</span>
+        </h1>
+        <p class="text-lg md:text-2xl mb-8 font-medium animate-fade-in delay-100">
             Encuentra los mejores productos de calzado para tu estilo.
         </p>
         <a
             href="/products"
-            class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded transition-all"
+            class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-full shadow-lg text-lg transition-all duration-300 animate-bounce"
         >
             Ver Productos
         </a>
     </div>
 </div>
+
+<style>
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+.animate-fade-in {
+    animation: fade-in 1s ease forwards;
+}
+.delay-100 {
+    animation-delay: 0.1s;
+}
+@keyframes bounce {
+    0% { transform: translateY(0);}
+    100% { transform: translateY(-10px);}
+}
+.animate-bounce {
+    animation: bounce 1.5s infinite alternate;
+}
+
+/* Responsive overrides */
+@media (max-width: 768px) {
+    .md\:flex-row { flex-direction: column !important; }
+    .md\:w-1\/2 { width: 100% !important; }
+    .md\:text-6xl { font-size: 2.25rem !important; }
+    .md\:min-h-\[70vh\] { min-height: 60vh !important; }
+    .md\:h-full { height: 12rem !important; }
+    .md\:text-2xl { font-size: 1.125rem !important; }
+}
+</style>
