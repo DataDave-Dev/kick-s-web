@@ -83,8 +83,16 @@ import SectionContainer from "../components/SectionContainer.astro";
                         <div class="text-base xs:text-xl font-bold text-gray-800 mb-4 md:mb-0">
                             Total de productos: <span class="text-red-500">${cart.reduce((acc, item) => acc + item.Cantidad, 0)}</span>
                         </div>
-                        <div class="text-lg xs:text-2xl font-bold text-gray-800">
-                            Total a pagar: <span class="text-red-500">$${total.toFixed(2)}</span>
+                        <div class="flex flex-col text-end text-lg xs:text-2xl font-bold text-gray-800">
+                            <div>
+                                SubTotal : <span class="text-red-500">$${(total / 1.16).toFixed(2)}</span>
+                            </div>
+                            <div>
+                                Impuestos (IVA) : <span class="text-red-500">$${(total - (total / 1.16)).toFixed(2)}</span>
+                            </div>
+                            <div>
+                                Total a pagar: <span class="text-red-500">$${total.toFixed(2)}</span>
+                            </div>
                         </div>
                     </div>
                     <div class="mt-6 flex justify-end">
