@@ -22,7 +22,9 @@ import SectionContainer from "../components/SectionContainer.astro";
 
         function renderCart() {
             const cart = getCart();
+            let subTotal = 0;
             let total = 0;
+            let impuestos = 0;
             let html = "";
 
             if (cart.length) {
@@ -32,6 +34,8 @@ import SectionContainer from "../components/SectionContainer.astro";
 
                 cart.forEach((item, idx) => {
                     const subtotal = Number(item.Precio) * item.Cantidad;
+                    subTotal = subtotal
+                    impuestos = subtotal - (subtotal * 1.16)
                     total += subtotal;
                     html += `
                     <div class="rounded-2xl shadow-xl overflow-hidden bg-white flex flex-col hover:shadow-2xl transition-shadow duration-300">
@@ -85,10 +89,10 @@ import SectionContainer from "../components/SectionContainer.astro";
                         </div>
                         <div class="flex flex-col text-end text-lg xs:text-2xl font-bold text-gray-800">
                             <div>
-                                SubTotal : <span class="text-red-500">$${(total / 1.16).toFixed(2)}</span>
+                                SubTotal : <span class="text-red-500">$${subTotal.toFixed(2)}</span>
                             </div>
                             <div>
-                                Impuestos (IVA) : <span class="text-red-500">$${(total - (total / 1.16)).toFixed(2)}</span>
+                                Impuestos (IVA) : <span class="text-red-500">$${impuestos.toFixed(2)}</span>
                             </div>
                             <div>
                                 Total a pagar: <span class="text-red-500">$${total.toFixed(2)}</span>
