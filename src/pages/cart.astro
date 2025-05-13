@@ -23,8 +23,6 @@ import SectionContainer from "../components/SectionContainer.astro";
         function renderCart() {
             const cart = getCart();
             let subTotal = 0;
-            let total = 0;
-            let impuestos = 0;
             let html = "";
 
             if (cart.length) {
@@ -34,9 +32,7 @@ import SectionContainer from "../components/SectionContainer.astro";
 
                 cart.forEach((item, idx) => {
                     const subtotal = Number(item.Precio) * item.Cantidad;
-                    subTotal = subtotal
-                    impuestos = subtotal - (subtotal * 1.16)
-                    total += subtotal;
+                    subTotal += subtotal;
                     html += `
                     <div class="rounded-2xl shadow-xl overflow-hidden bg-white flex flex-col hover:shadow-2xl transition-shadow duration-300">
                         <div class="relative">
@@ -81,6 +77,9 @@ import SectionContainer from "../components/SectionContainer.astro";
                 html += `</div>`;
 
                 // Agregar el resumen del carrito
+                const impuestos = subTotal * 0.16;
+                const total = subTotal + impuestos;
+
                 html += `
                 <div class="bg-white rounded-2xl shadow-xl p-4 xs:p-6 mt-8">
                     <div class="flex flex-col md:flex-row justify-between items-center">
