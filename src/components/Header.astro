@@ -78,7 +78,7 @@ if (accessToken && refreshToken) {
             <li>
                 {
                     isLoggedIn ? (
-                        <form action="/api/auth/logout" method="post">
+                        <form action="/api/auth/signout" method="POST">
                             <button
                                 type="submit"
                                 class="hover:text-red-500 font-semibold transition-all duration-300 text-sm md:text-base bg-transparent border-none cursor-pointer"
