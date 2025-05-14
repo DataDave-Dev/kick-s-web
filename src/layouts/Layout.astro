@@ -3,7 +3,8 @@ import "../styles/global.css";
 import "@fontsource-variable/onest";
 import Header from "../components/Header.astro";
 import ClientRouter from "astro/components/ClientRouter.astro";
-import 'lenis/dist/lenis.css'
+import "lenis/dist/lenis.css";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -17,9 +18,10 @@ import 'lenis/dist/lenis.css'
 		<ClientRouter />
 	</head>
 	<Header />
-	<body>
-		<slot />
-	</body>
+		<body>
+			<slot />
+		</body>
+	<Footer />
 </html>
 
 <style>
