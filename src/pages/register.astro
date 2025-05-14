@@ -11,7 +11,7 @@ import SectionContainer from "../components/SectionContainer.astro";
         ¿Ya tienes una cuenta?
         <a href="/signin" class="text-red-500 hover:underline font-semibold">Inicia sesión</a>
       </p>
-      <form action="/api/auth/register" method="post" class="flex flex-col gap-4">
+      <form action="/api/auth/register" method="POST" class="flex flex-col gap-4">
         <div>
           <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
           <input
@@ -37,7 +37,7 @@ import SectionContainer from "../components/SectionContainer.astro";
         </div>
         <button
           type="submit"
-          class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg shadow transition-all text-lg mt-2"
+          class="w-full bg-red-500 hover:bg-red-600 hover:cursor-pointer text-white font-bold py-2 rounded-lg shadow transition-all text-lg mt-2"
         >
           Registrarme
         </button>

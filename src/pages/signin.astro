@@ -28,7 +28,7 @@ if (accessToken && refreshToken) {
             </p>
             <form
                 action="/api/auth/signin"
-                method="post"
+                method="POST"
                 class="flex flex-col gap-4"
             >
                 <div>
@@ -63,7 +63,7 @@ if (accessToken && refreshToken) {
                 </div>
                 <button
                     type="submit"
-                    class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg shadow transition-all text-lg mt-2"
+                    class="w-full bg-red-500 hover:bg-red-600 text-white font-bold hover:cursor-pointer py-2 rounded-lg shadow transition-all text-lg mt-2"
                 >
                     Ingresar
                 </button>
