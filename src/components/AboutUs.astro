@@ -37,7 +37,6 @@ import SectionContainer from "./SectionContainer.astro";
             </p>
         </div>
 
-        <!-- Timeline section -->
         <div class="timeline-section mb-20 opacity-0">
             <div
                 class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between"
@@ -87,7 +86,6 @@ import SectionContainer from "./SectionContainer.astro";
             </div>
         </div>
 
-        <!-- Values section with cards -->
         <h2
             class="text-3xl font-bold text-center mb-10 text-black opacity-0 values-title"
         >
@@ -164,11 +162,10 @@ import SectionContainer from "./SectionContainer.astro";
                 const lenis = new Lenis({
                     duration: 1.2,
                     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                    direction: "vertical",
-                    gestureDirection: "vertical",
-                    smooth: true,
-                    mouseMultiplier: 1,
-                    smoothTouch: false,
+                    orientation: "vertical",
+                    gestureOrientation: "vertical",
+                    smoothWheel: true,
+                    wheelMultiplier: 1,
                     touchMultiplier: 2,
                     infinite: false,
                 });
