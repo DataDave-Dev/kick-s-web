@@ -1,4 +1,5 @@
 ---
+export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import SectionContainer from "../components/SectionContainer.astro";
 
@@ -8,7 +9,7 @@ const accessToken = cookies.get("sb-access-token");
 const refreshToken = cookies.get("sb-refresh-token");
 
 if (accessToken && refreshToken) {
-    return redirect("/index");
+    return redirect("/");
 }
 ---
 
@@ -28,7 +29,7 @@ if (accessToken && refreshToken) {
             </p>
             <form
                 action="/api/auth/signin"
-                method="POST"
+                method="post"
                 class="flex flex-col gap-4"
             >
                 <div>
