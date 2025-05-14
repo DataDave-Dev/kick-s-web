@@ -61,7 +61,7 @@ import SectionContainer from "../components/SectionContainer.astro";
                                         >+</button>
                                     </div>
                                 </div>
-                                <span class="text-base xs:text-lg font-bold text-red-500">$${(Number(item.Precio) * item.Cantidad).toFixed(2)}</span>
+                                <span class="text-base xs:text-lg font-bold text-red-500">$${(Number(item.Precio) * item.Cantidad).toLocaleString("es-MX", { minimumFractionDigits: 2 })}</span>
                             </div>
                             <button
                                 onclick="removeFromCartByIndex(${idx})"
@@ -88,13 +88,13 @@ import SectionContainer from "../components/SectionContainer.astro";
                         </div>
                         <div class="flex flex-col text-end text-lg xs:text-2xl font-bold text-gray-800">
                             <div>
-                                SubTotal : <span class="text-red-500">$${subTotal.toFixed(2)}</span>
+                                SubTotal : <span class="text-red-500">$${subTotal.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                             </div>
                             <div>
-                                Impuestos (IVA) : <span class="text-red-500">$${impuestos.toFixed(2)}</span>
+                                Impuestos (IVA) : <span class="text-red-500">$${impuestos.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                             </div>
                             <div>
-                                Total a pagar: <span class="text-red-500">$${total.toFixed(2)}</span>
+                                Total a pagar: <span class="text-red-500">$${total.toLocaleString("es-MX", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                             </div>
                         </div>
                     </div>

@@ -52,7 +52,14 @@ const {
                 >Disponibles: <span class="font-semibold">{Cantidad}</span
                 ></span
             >
-            <span class="text-lg font-bold text-red-500">${Precio}</span>
+            <span class="text-lg font-bold text-red-500">
+                {
+                    Number(Precio).toLocaleString("es-MX", {
+                        style: "currency",
+                        currency: "MXN",
+                    })
+                }
+            </span>
         </div>
         <button
             type="button"
