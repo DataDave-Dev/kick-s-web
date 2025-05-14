@@ -3,6 +3,9 @@ export const prerender = false;
 import Layout from "../layouts/Layout.astro";
 import SectionContainer from "../components/SectionContainer.astro";
 
+const error = Astro.url.searchParams.get("error");
+const success = Astro.url.searchParams.get("success");
+
 const { cookies, redirect } = Astro;
 
 const accessToken = cookies.get("sb-access-token");
@@ -27,6 +30,20 @@ if (accessToken && refreshToken) {
                     >Crea una cuenta</a
                 >
             </p>
+            {
+                error && (
+                    <div class="mb-4 p-3 rounded bg-red-100 text-red-700 text-center font-semibold">
+                        {error}
+                    </div>
+                )
+            }
+            {
+                success && (
+                    <div class="mb-4 p-3 rounded bg-green-100 text-green-700 text-center font-semibold">
+                        ¡Registro exitoso!
+                    </div>
+                )
+            }
             <form
                 action="/api/auth/signin"
                 method="post"
