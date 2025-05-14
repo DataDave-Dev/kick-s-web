@@ -1,14 +1,38 @@
 ---
+// filepath: c:\Users\SISTEMAS\proyectos\kick's-web\src\components\Header.astro
+import { supabase } from "../lib/supabase";
+
 const currentUrl = Astro.url.pathname;
+const accessToken = Astro.cookies.get("sb-access-token");
+const refreshToken = Astro.cookies.get("sb-refresh-token");
+
+let isLoggedIn = false;
+
+if (accessToken && refreshToken) {
+    try {
+        const session = await supabase.auth.setSession({
+            refresh_token: refreshToken.value,
+            access_token: accessToken.value,
+        });
+        if (!session.error && session.data.user) {
+            isLoggedIn = true;
+        } else {
+            Astro.cookies.delete("sb-access-token", { path: "/" });
+            Astro.cookies.delete("sb-refresh-token", { path: "/" });
+        }
+    } catch (error) {
+        Astro.cookies.delete("sb-access-token", { path: "/" });
+        Astro.cookies.delete("sb-refresh-token", { path: "/" });
+    }
+}
 ---
 
 <header
     class="fixed z-10 bg-white w-full flex flex-row justify-between items-center px-4 md:px-12 py-4 shadow-md"
 >
     <h1 class="text-lg md:text-xl font-bold">
-        <a href="/" aria-label="Inicio"
-            >Kick's
-            <span class="text-red-500">Store</span>
+        <a href="/" aria-label="Inicio">
+            Kick's <span class="text-red-500">Store</span>
         </a>
     </h1>
 
@@ -51,34 +75,56 @@ const currentUrl = Astro.url.pathname;
                     >
                 </a>
             </li>
+            <li>
+                {
+                    isLoggedIn ? (
+                        <form action="/api/auth/logout" method="post">
+                            <button
+                                type="submit"
+                                class="hover:text-red-500 font-semibold transition-all duration-300 text-sm md:text-base bg-transparent border-none cursor-pointer"
+                            >
+                                Cerrar Sesión
+                            </button>
+                        </form>
+                    ) : (
+                        <a
+                            href="/register"
+                            class={`hover:text-red-500 font-semibold ${currentUrl === "/register" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
+                        >
+                            Registrarse
+                        </a>
+                    )
+                }
+            </li>
         </ul>
     </nav>
 </header>
 
 <style>
-@media (max-width: 768px) {
-    header {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
+    @media (max-width: 768px) {
+        header {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        .md\:px-12 {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        .md\:text-xl {
+            font-size: 1.125rem !important;
+        }
+        .md\:h-6,
+        .md\:w-6 {
+            height: 1.5rem !important;
+            width: 1.5rem !important;
+        }
+        .md\:text-base {
+            font-size: 1rem !important;
+        }
+        ul.flex {
+            gap: 0.5rem !important;
+        }
     }
-    .md\:px-12 {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
-    .md\:text-xl {
-        font-size: 1.125rem !important;
-    }
-    .md\:h-6, .md\:w-6 {
-        height: 1.5rem !important;
-        width: 1.5rem !important;
-    }
-    .md\:text-base {
-        font-size: 1rem !important;
-    }
-    ul.flex {
-        gap: 0.5rem !important;
-    }
-}
 </style>
 
 <script type="module">
@@ -91,7 +137,10 @@ const currentUrl = Astro.url.pathname;
     }
     function updateCartCount() {
         const cart = getCart();
-        const count = cart.reduce((sum, item) => sum + (Number(item.Cantidad) || 0), 0);
+        const count = cart.reduce(
+            (sum, item) => sum + (Number(item.Cantidad) || 0),
+            0,
+        );
         const badge = document.getElementById("cart-count");
         if (badge) badge.textContent = count;
     }
