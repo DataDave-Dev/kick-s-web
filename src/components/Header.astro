@@ -1,5 +1,4 @@
 ---
-// filepath: c:\Users\SISTEMAS\proyectos\kick's-web\src\components\Header.astro
 import { supabase } from "../lib/supabase";
 
 const currentUrl = Astro.url.pathname;
@@ -28,7 +27,7 @@ if (accessToken && refreshToken) {
 ---
 
 <header
-    class="fixed z-10 bg-white w-full flex flex-row justify-between items-center px-4 md:px-12 py-4 shadow-md"
+    class="fixed z-20 bg-white w-full flex flex-row justify-between items-center px-4 md:px-12 py-4 shadow-md"
 >
     <h1 class="text-lg md:text-xl font-bold">
         <a href="/" aria-label="Inicio">
@@ -36,27 +35,78 @@ if (accessToken && refreshToken) {
         </a>
     </h1>
 
-    <nav class="flex">
-        <ul class="flex space-x-2 md:space-x-4 items-center">
+    <button
+        id="mobile-menu-btn"
+        class="md:hidden flex items-center px-2 py-1 border rounded text-gray-700 border-gray-300 focus:outline-none"
+        aria-label="Menú"
+    >
+        <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <nav id="main-nav" class="md:block">
+        <ul
+            id="mobile-menu"
+            class="hidden md:flex flex-col md:flex-row md:space-x-4 items-center bg-white md:bg-transparent absolute md:static left-0 right-0 top-16 w-full md:w-auto shadow-md md:shadow-none border-t md:border-none z-50"
+        >
             <li>
                 <a
                     href="/"
-                    class={`hover:text-red-500 font-semibold ${currentUrl === "/" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
+                    class={`block px-4 py-3 md:p-0 hover:text-red-500 font-semibold ${currentUrl === "/" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
                     >Inicio</a
                 >
             </li>
             <li>
                 <a
                     href="/products"
-                    class={`hover:text-red-500 font-semibold ${currentUrl === "/products" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
+                    class={`block px-4 py-3 md:p-0 hover:text-red-500 font-semibold ${currentUrl === "/products" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
                     >Productos</a
                 >
             </li>
             <li>
-                <a href="/cart" class="relative flex items-center group">
+                {
+                    isLoggedIn ? (
+                        <form
+                            action="/api/auth/signout"
+                            method="get"
+                            class="block px-4 py-3 md:p-0"
+                        >
+                            <button
+                                type="submit"
+                                class="hover:text-red-500 font-semibold transition-all duration-300 text-sm md:text-base bg-transparent border-none cursor-pointer w-full text-left"
+                            >
+                                Cerrar Sesión
+                            </button>
+                        </form>
+                    ) : (
+                        <a
+                            href="/register"
+                            class={`block px-4 py-3 md:p-0 hover:text-red-500 font-semibold ${currentUrl === "/register" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
+                        >
+                            Registrarse
+                        </a>
+                    )
+                }
+            </li>
+            <li class="px-4 py-3 md:p-0">
+                <a
+                    href="/cart"
+                    class="relative flex items-center"
+                    aria-label="Carrito de compras"
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6 md:h-6 md:w-6"
+                        class="h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -75,59 +125,37 @@ if (accessToken && refreshToken) {
                     >
                 </a>
             </li>
-            <li>
-                {
-                    isLoggedIn ? (
-                        <form action="/api/auth/signout" method="get">
-                            <button
-                                type="submit"
-                                class="hover:text-red-500 font-semibold transition-all duration-300 text-sm md:text-base bg-transparent border-none cursor-pointer"
-                            >
-                                Cerrar Sesión
-                            </button>
-                        </form>
-                    ) : (
-                        <a
-                            href="/register"
-                            class={`hover:text-red-500 font-semibold ${currentUrl === "/register" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
-                        >
-                            Registrarse
-                        </a>
-                    )
-                }
-            </li>
         </ul>
     </nav>
 </header>
 
 <style>
+    /* Estilos para el menú móvil */
     @media (max-width: 768px) {
-        header {
-            padding-left: 1rem !important;
-            padding-right: 1rem !important;
+        #mobile-menu {
+            transition: all 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
         }
-        .md\:px-12 {
-            padding-left: 1rem !important;
-            padding-right: 1rem !important;
-        }
-        .md\:text-xl {
-            font-size: 1.125rem !important;
-        }
-        .md\:h-6,
-        .md\:w-6 {
-            height: 1.5rem !important;
-            width: 1.5rem !important;
-        }
-        .md\:text-base {
-            font-size: 1rem !important;
-        }
-        ul.flex {
-            gap: 0.5rem !important;
+
+        #mobile-menu.expanded {
+            display: flex !important;
+            max-height: 300px;
         }
     }
 </style>
 
 <script type="module">
+    const $mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    const $mobileMenu = document.getElementById("mobile-menu");
+
+    if ($mobileMenuBtn && $mobileMenu) {
+        $mobileMenuBtn.addEventListener("click", () => {
+            $mobileMenu.classList.toggle("hidden");
+            $mobileMenu.classList.toggle("expanded");
+        });
+    }
+
     function getCart() {
         try {
             return JSON.parse(localStorage.getItem("cart") || "[]");
@@ -135,6 +163,7 @@ if (accessToken && refreshToken) {
             return [];
         }
     }
+
     function updateCartCount() {
         const cart = getCart();
         const count = cart.reduce(
@@ -144,9 +173,24 @@ if (accessToken && refreshToken) {
         const badge = document.getElementById("cart-count");
         if (badge) badge.textContent = count;
     }
+
     window.updateCartCount = updateCartCount;
+
     updateCartCount();
+
     window.addEventListener("storage", function (e) {
         if (e.key === "cart") updateCartCount();
     });
+
+    const $menuLinks = $mobileMenu?.querySelectorAll("a");
+    if ($menuLinks) {
+        $menuLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                if (window.innerWidth < 768) {
+                    $mobileMenu.classList.add("hidden");
+                    $mobileMenu.classList.remove("expanded");
+                }
+            });
+        });
+    }
 </script>
