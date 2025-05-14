@@ -46,7 +46,7 @@ import SectionContainer from "./SectionContainer.astro";
                     <div
                         class="number-circle w-16 h-16 rounded-full bg-red-500 flex items-center justify-center text-white font-bold mx-auto mb-4"
                     >
-                        2018
+                        2024
                     </div>
                     <h3 class="font-bold text-lg">Nuestros inicios</h3>
                     <p class="text-sm max-w-xs mx-auto mt-2">
@@ -62,7 +62,7 @@ import SectionContainer from "./SectionContainer.astro";
                     <div
                         class="number-circle w-16 h-16 rounded-full bg-red-500 flex items-center justify-center text-white font-bold mx-auto mb-4"
                     >
-                        2020
+                        2025
                     </div>
                     <h3 class="font-bold text-lg">Expansión digital</h3>
                     <p class="text-sm max-w-xs mx-auto mt-2">
@@ -159,10 +159,8 @@ import SectionContainer from "./SectionContainer.astro";
                 const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
                 const Lenis = lenisModule.default || lenisModule;
 
-                // Registramos el plugin de ScrollTrigger
                 gsap.registerPlugin(ScrollTrigger);
 
-                // Inicializamos Lenis para scroll suave
                 const lenis = new Lenis({
                     duration: 1.2,
                     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -175,7 +173,7 @@ import SectionContainer from "./SectionContainer.astro";
                     infinite: false,
                 });
 
-                function raf(time) {
+                function raf(time: number) {
                     lenis.raf(time);
                     requestAnimationFrame(raf);
                 }
@@ -258,7 +256,6 @@ import SectionContainer from "./SectionContainer.astro";
                         start: "top 80%",
                     },
                 });
-
 
                 const members = document.querySelectorAll(".team-member");
                 members.forEach((member, index) => {
