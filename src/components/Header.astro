@@ -229,10 +229,7 @@ if (accessToken && refreshToken) {
 
         function updateCartCount() {
             const cart = getCart();
-            const count = cart.reduce(
-                (sum, item) => sum + (Number(item.Cantidad) || 0),
-                0,
-            );
+            const count = cart.length;
 
             const desktopBadge = document.getElementById("cart-count");
             if (desktopBadge) desktopBadge.textContent = count;

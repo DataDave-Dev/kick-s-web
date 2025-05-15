@@ -99,12 +99,12 @@ import SectionContainer from "../components/SectionContainer.astro";
                         </div>
                     </div>
                     <div class="mt-6 flex justify-end">
-                        <button 
-                            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 xs:py-3 px-6 xs:px-8 rounded-full shadow transition-all text-sm xs:text-base"
-                            onclick="proceedToCheckout()"
+                        <a 
+                            href="/pay"
+                            class="bg-green-500 hover:bg-green-600 hover:cursor-pointer text-white font-bold py-2 xs:py-3 px-6 xs:px-8 rounded-full shadow transition-all text-sm xs:text-base"
                         >
                             Proceder al pago
-                        </button>
+                        </a>
                     </div>
                 </div>
                 `;
@@ -147,15 +147,8 @@ import SectionContainer from "../components/SectionContainer.astro";
             if (window.updateCartCount) window.updateCartCount();
         }
 
-        function proceedToCheckout() {
-            alert(
-                "¡Gracias por tu compra! Esta funcionalidad estará disponible pronto.",
-            );
-        }
-
         window.updateCartItemQuantity = updateCartItemQuantity;
         window.removeFromCartByIndex = removeFromCartByIndex;
-        window.proceedToCheckout = proceedToCheckout;
 
         document.addEventListener("astro:page-load", renderCart);
         window.addEventListener("storage", function (e) {
