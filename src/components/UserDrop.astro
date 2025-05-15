@@ -1,0 +1,88 @@
+---
+import { AcronymFunction } from "../lib/utils";
+
+const userCookie = Astro.cookies.get("sb-user");
+let user = null;
+if (userCookie) {
+    try {
+        user = JSON.parse(userCookie.value);
+    } catch {}
+} else {
+    user = "";
+}
+
+const acronym = AcronymFunction(user.username);
+---
+
+<div
+    id="dropdownButton"
+    class="relative inline-flex items-center hover:cursor-pointer justify-center w-10 h-10 overflow-hidden rounded-full bg-gray-100"
+>
+    <span class="font-medium text-gray-600">{acronym}</span>
+</div>
+
+<div
+    id="userDropdown"
+    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-56"
+>
+    <div class="px-4 py-3 text-sm text-gray-900">
+        <div>{user.username}</div>
+        <div class="font-medium truncate">{user.email}</div>
+    </div>
+    <ul
+        class="py-2 text-sm text-gray-700"
+        aria-labelledby="avatarButton"
+    >
+        <li>
+            <a
+                href="#"
+                class="block px-4 py-2 hover:bg-gray-100"
+                >Dashboard</a
+            >
+        </li>
+        <li>
+            <a
+                href="#"
+                class="block px-4 py-2 hover:bg-gray-100"
+                >Settings</a
+            >
+        </li>
+        <li>
+            <a
+                href="#"
+                class="block px-4 py-2 hover:bg-gray-100"
+                >Earnings</a
+            >
+        </li>
+    </ul>
+    <div class="py-1">
+        <form
+            action="/api/auth/signout"
+            method="get"
+            class="block px-4 py-3 md:p-0"
+        >
+            <button
+                type="submit"
+                class="block w-full text-start hover:cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+                Cerrar Sesión
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    import { Dropdown } from "flowbite";
+
+    document.addEventListener("astro:page-load", () => {
+        const dropdownButton = document.getElementById("dropdownButton");
+        const dropdownMenu = document.getElementById("userDropdown");
+
+        if (dropdownButton && dropdownMenu) {
+            const dropdown = new Dropdown(dropdownMenu, dropdownButton, {
+                placement: "bottom-start",
+                triggerType: "click",
+            });
+        }
+    });
+</script>

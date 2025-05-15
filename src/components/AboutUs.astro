@@ -275,14 +275,11 @@ import SectionContainer from "./SectionContainer.astro";
     }
 
     document.addEventListener("astro:page-load", initAnimations);
-
     document.addEventListener("astro:page-load", initAnimations);
-
     document.addEventListener("astro:after-swap", initAnimations);
 </script>
 
 <style>
-    /* Estilos base para la sección */
     .title-reveal {
         opacity: 0;
         transform: translateY(20px);
@@ -345,7 +342,6 @@ import SectionContainer from "./SectionContainer.astro";
         border-color: rgb(239, 68, 68);
     }
 
-    /* Animaciones de fondo */
     @keyframes blob {
         0% {
             transform: scale(1) translate(0px, 0px);
@@ -373,7 +369,6 @@ import SectionContainer from "./SectionContainer.astro";
         animation-delay: 4s;
     }
 
-    /* Media queries para responsive */
     @media (max-width: 900px) {
         .grid {
             grid-template-columns: 1fr !important;

@@ -1,5 +1,6 @@
 ---
 import { supabase } from "../lib/supabase";
+import UserDrop from "./UserDrop.astro";
 
 const currentUrl = Astro.url.pathname;
 const accessToken = Astro.cookies.get("sb-access-token");
@@ -26,134 +27,187 @@ if (accessToken && refreshToken) {
 }
 ---
 
-<header
-    class="fixed z-20 bg-white w-full flex flex-row justify-between items-center px-4 md:px-12 py-4 shadow-md"
->
-    <h1 class="text-lg md:text-xl font-bold">
-        <a href="/" aria-label="Inicio">
-            Kick's <span class="text-red-500">Store</span>
-        </a>
-    </h1>
-
-    <button
-        id="mobile-menu-btn"
-        class="md:hidden flex items-center px-2 py-1 border rounded text-gray-700 border-gray-300 focus:outline-none"
-        aria-label="Menú"
-    >
-        <svg
-            class="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-        >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-    </button>
-
-    <nav id="main-nav" class="md:block">
-        <ul
-            id="mobile-menu"
-            class="hidden md:flex flex-col md:flex-row md:space-x-4 items-center bg-white md:bg-transparent absolute md:static left-0 right-0 top-16 w-full md:w-auto shadow-md md:shadow-none border-t md:border-none z-50"
-        >
-            <li>
-                <a
-                    href="/"
-                    class={`block px-4 py-3 md:p-0 hover:text-red-500 font-semibold ${currentUrl === "/" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
-                    >Inicio</a
-                >
-            </li>
-            <li>
-                <a
-                    href="/products"
-                    class={`block px-4 py-3 md:p-0 hover:text-red-500 font-semibold ${currentUrl === "/products" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
-                    >Productos</a
-                >
-            </li>
-            <li>
-                {
-                    isLoggedIn ? (
-                        <form
-                            action="/api/auth/signout"
-                            method="get"
-                            class="block px-4 py-3 md:p-0"
-                        >
-                            <button
-                                type="submit"
-                                class="hover:text-red-500 font-semibold transition-all duration-300 text-sm md:text-base bg-transparent border-none cursor-pointer w-full text-left"
-                            >
-                                Cerrar Sesión
-                            </button>
-                        </form>
-                    ) : (
-                        <a
-                            href="/register"
-                            class={`block px-4 py-3 md:p-0 hover:text-red-500 font-semibold ${currentUrl === "/register" ? "text-red-500" : ""} transition-all duration-300 text-sm md:text-base`}
-                        >
-                            Registrarse
-                        </a>
-                    )
-                }
-            </li>
-            <li class="px-4 py-3 md:p-0">
-                <a
-                    href="/cart"
-                    class="relative flex items-center"
-                    aria-label="Carrito de compras"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A1 1 0 007.5 17h9a1 1 0 00.85-1.53L17 13M7 13V6a1 1 0 011-1h5a1 1 0 011 1v7"
-                        ></path>
-                    </svg>
-                    <span
-                        id="cart-count"
-                        class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center"
-                        >0</span
-                    >
+<header class="fixed z-20 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 transition-all duration-300">
+    <div class="container mx-auto px-4 md:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 md:h-20">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+                <a href="/" class="flex items-center" aria-label="Inicio">
+                    <span class="text-xl md:text-2xl font-extrabold tracking-tight">
+                        Kick's <span class="text-red-500 font-black">Store</span>
+                    </span>
                 </a>
-            </li>
-        </ul>
-    </nav>
+            </div>
+
+            <!-- Mobile menu button -->
+            <button
+                id="mobile-menu-btn"
+                class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-red-500 hover:bg-gray-50 focus:outline-none transition duration-150 ease-in-out"
+                aria-expanded="false"
+                aria-label="Menú"
+            >
+                <svg 
+                    class="h-6 w-6" 
+                    stroke="currentColor" 
+                    fill="none" 
+                    viewBox="0 0 24 24"
+                >
+                    <path 
+                        class="menu-open" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        stroke-width="2" 
+                        d="M4 6h16M4 12h16M4 18h16"
+                    />
+                    <path 
+                        class="menu-close hidden" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        stroke-width="2" 
+                        d="M6 18L18 6M6 6l12 12"
+                    />
+                </svg>
+            </button>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-4">
+                <a 
+                    href="/" 
+                    class={`px-3 py-2 rounded-md font-medium hover:text-red-500 ${currentUrl === "/" 
+                        ? "text-red-500 font-semibold" 
+                        : "text-gray-700"} transition-all duration-200`}
+                >
+                    Inicio
+                </a>
+                <a 
+                    href="/products" 
+                    class={`px-3 py-2 rounded-md font-medium hover:text-red-500 ${currentUrl === "/products" 
+                        ? "text-red-500 font-semibold" 
+                        : "text-gray-700"} transition-all duration-200`}
+                >
+                    Productos
+                </a>
+                <div class="ml-1 relative flex items-center">
+                    <a
+                        href="/cart"
+                        class="p-2 rounded-full hover:bg-gray-100 transition-all duration-200 relative"
+                        aria-label="Carrito de compras"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-6 w-6 text-gray-700"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A1 1 0 007.5 17h9a1 1 0 00.85-1.53L17 13M7 13V6a1 1 0 011-1h5a1 1 0 011 1v7"
+                            ></path>
+                        </svg>
+                        <span
+                            id="cart-count"
+                            class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold shadow-sm"
+                        >0</span>
+                    </a>
+                </div>
+                <div class="pl-1">
+                    {
+                        isLoggedIn ? (
+                            <UserDrop />
+                        ) : (
+                            <a
+                                href="/signin"
+                                class={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm ${
+                                    currentUrl === "/signin"
+                                        ? "bg-red-500 text-white hover:bg-red-600"
+                                        : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+                                } transition-all duration-200`}
+                            >
+                                Iniciar Sesión
+                            </a>
+                        )
+                    }
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden">
+        <div class="bg-white border-t border-gray-100 py-2 space-y-1">
+            <a 
+                href="/" 
+                class={`block px-4 py-3 rounded-md font-medium hover:bg-gray-50 ${
+                    currentUrl === "/" 
+                    ? "text-red-500 font-semibold" 
+                    : "text-gray-700"
+                } transition-all duration-200`}
+            >
+                Inicio
+            </a>
+            <a 
+                href="/products" 
+                class={`block px-4 py-3 rounded-md font-medium hover:bg-gray-50 ${
+                    currentUrl === "/products" 
+                    ? "text-red-500 font-semibold" 
+                    : "text-gray-700"
+                } transition-all duration-200`}
+            >
+                Productos
+            </a>
+            <a 
+                href="/cart" 
+                class="block px-4 py-3 rounded-md font-medium hover:bg-gray-50 text-gray-700 transition-all duration-200 flex items-center justify-between"
+            >
+                <span>Carrito</span>
+                <span 
+                    id="mobile-cart-count" 
+                    class="bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold"
+                >
+                    0
+                </span>
+            </a>
+            {
+                isLoggedIn ? (
+                    <div class="px-4 py-2">
+                        <UserDrop />
+                    </div>
+                ) : (
+                    <a
+                        href="/signin"
+                        class={`block px-4 py-3 rounded-md font-medium hover:bg-gray-50 ${
+                            currentUrl === "/signin" 
+                            ? "text-red-500 font-semibold" 
+                            : "text-gray-700"
+                        } transition-all duration-200`}
+                    >
+                        Iniciar Sesión
+                    </a>
+                )
+            }
+        </div>
+    </div>
 </header>
-
-<style>
-    /* Estilos para el menú móvil */
-    @media (max-width: 768px) {
-        #mobile-menu {
-            transition: all 0.3s ease;
-            max-height: 0;
-            overflow: hidden;
-        }
-
-        #mobile-menu.expanded {
-            display: flex !important;
-            max-height: 300px;
-        }
-    }
-</style>
 
 <script is:inline>
     document.addEventListener("astro:page-load", () => {
         const $mobileMenuBtn = document.getElementById("mobile-menu-btn");
         const $mobileMenu = document.getElementById("mobile-menu");
+        const $menuOpen = document.querySelector(".menu-open");
+        const $menuClose = document.querySelector(".menu-close");
 
         if ($mobileMenuBtn && $mobileMenu) {
             $mobileMenuBtn.addEventListener("click", () => {
                 $mobileMenu.classList.toggle("hidden");
-                $mobileMenu.classList.toggle("expanded");
+                $menuOpen.classList.toggle("hidden");
+                $menuClose.classList.toggle("hidden");
+                $mobileMenuBtn.setAttribute(
+                    "aria-expanded",
+                    $mobileMenu.classList.contains("hidden") ? "false" : "true"
+                );
             });
         }
 
@@ -169,10 +223,16 @@ if (accessToken && refreshToken) {
             const cart = getCart();
             const count = cart.reduce(
                 (sum, item) => sum + (Number(item.Cantidad) || 0),
-                0,
+                0
             );
-            const badge = document.getElementById("cart-count");
-            if (badge) badge.textContent = count;
+            
+            // Actualizar contador en desktop
+            const desktopBadge = document.getElementById("cart-count");
+            if (desktopBadge) desktopBadge.textContent = count;
+            
+            // Actualizar contador en móvil
+            const mobileBadge = document.getElementById("mobile-cart-count");
+            if (mobileBadge) mobileBadge.textContent = count;
         }
 
         window.updateCartCount = updateCartCount;
@@ -182,16 +242,35 @@ if (accessToken && refreshToken) {
             if (e.key === "cart") updateCartCount();
         });
 
-        const $menuLinks = $mobileMenu?.querySelectorAll("a");
-        if ($menuLinks) {
-            $menuLinks.forEach((link) => {
+        // Cerrar el menú móvil al hacer clic en un enlace
+        const $mobileMenuLinks = $mobileMenu?.querySelectorAll("a");
+        if ($mobileMenuLinks) {
+            $mobileMenuLinks.forEach((link) => {
                 link.addEventListener("click", () => {
                     if (window.innerWidth < 768) {
                         $mobileMenu.classList.add("hidden");
-                        $mobileMenu.classList.remove("expanded");
+                        $menuOpen.classList.remove("hidden");
+                        $menuClose.classList.add("hidden");
+                        $mobileMenuBtn.setAttribute("aria-expanded", "false");
                     }
                 });
             });
         }
+        
+        // Detectar scroll para efectos del header
+        const header = document.querySelector('header');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 50) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+            
+            lastScroll = currentScroll;
+        });
     });
 </script>
