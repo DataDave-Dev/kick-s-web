@@ -13,8 +13,8 @@ if (!accessToken && !refreshToken) {
 ---
 
 <Layout>
-    <SectionContainer class="py-12 px-4 md:py-25">
-        <div class="max-w-3xl mx-auto">
+    <SectionContainer class="py-25 px-4">
+        <div class="max-w-5xl mx-auto">
             <div class="mb-10">
                 <div class="flex justify-between items-center">
                     <div class="flex flex-col items-center">
@@ -228,12 +228,20 @@ if (!accessToken && !refreshToken) {
                         </div>
 
                         <div class="mt-6">
-                            <div class="space-y-3 py-4 border-t border-dashed border-gray-200" id="order-summary-totals">
+                            <div
+                                class="space-y-3 py-4 border-t border-dashed border-gray-200"
+                                id="order-summary-totals"
+                            >
                             </div>
-                            
-                            <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
+
+                            <div
+                                class="flex justify-between items-center mt-4 pt-4 border-t border-gray-200"
+                            >
                                 <span class="text-lg font-bold">Total</span>
-                                <span id="order-summary-total" class="text-xl font-bold text-red-500"></span>
+                                <span
+                                    id="order-summary-total"
+                                    class="text-xl font-bold text-red-500"
+                                ></span>
                             </div>
                         </div>
 
@@ -292,4 +300,4 @@ if (!accessToken && !refreshToken) {
     }
 </style>
 
-<script is:inline src="/src/scripts/pay.js"></script>
+<script src="../scripts/pay.js"></script>

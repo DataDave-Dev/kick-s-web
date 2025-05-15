@@ -41,7 +41,7 @@ function renderOrderSummary() {
                             <img src="${item.Imagen}" class="max-w-full max-h-full object-contain" alt="${item.Producto}" />
                         </div>
                         <div>
-                            <p class="font-medium text-sm">${item.Producto}</p>
+                            <p class="font-bold text-sm">${item.Producto}</p>
                             <p class="text-gray-500 text-xs">Cantidad: ${item.Cantidad}</p>
                         </div>
                     </div>
