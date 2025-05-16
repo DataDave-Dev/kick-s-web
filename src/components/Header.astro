@@ -28,15 +28,14 @@ if (accessToken && refreshToken) {
 ---
 
 <header
-    class="fixed z-20 w-full bg-white/95 backdrop-blur-sm border-b border-gray-100 transition-all duration-300"
+    class="fixed z-20 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300"
 >
     <div class="container mx-auto px-4 md:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16 md:h-20">
-            <!-- Logo -->
-            <div class="flex-shrink-0">
+            <div class="flex-shrink-0 group">
                 <a href="/" class="flex items-center" aria-label="Inicio">
                     <span
-                        class="text-xl md:text-2xl font-extrabold tracking-tight"
+                        class="text-xl md:text-2xl font-extrabold tracking-tight group-hover:scale-105 transition-transform duration-300"
                     >
                         Kick's <span class="text-red-500 font-black">Store</span
                         >
@@ -44,10 +43,9 @@ if (accessToken && refreshToken) {
                 </a>
             </div>
 
-            <!-- Mobile menu button -->
             <button
                 id="mobile-menu-btn"
-                class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-red-500 hover:bg-gray-50 focus:outline-none transition duration-150 ease-in-out"
+                class="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 hover:text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-200 transition duration-200 ease-in-out"
                 aria-expanded="false"
                 aria-label="Menú"
             >
@@ -72,32 +70,37 @@ if (accessToken && refreshToken) {
                 </svg>
             </button>
 
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center space-x-1 lg:space-x-4">
+            <nav class="hidden md:flex items-center space-x-2 lg:space-x-6">
                 <a
                     href="/"
-                    class={`px-3 py-2 rounded-md font-medium hover:text-red-500 ${
+                    class={`px-3 py-2 rounded-md font-medium hover:text-red-500 relative group ${
                         currentUrl === "/"
                             ? "text-red-500 font-semibold"
                             : "text-gray-700"
                     } transition-all duration-200`}
                 >
                     Inicio
+                    <span
+                        class={`absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full ${currentUrl === "/" ? "w-full" : ""}`}
+                    ></span>
                 </a>
                 <a
                     href="/products"
-                    class={`px-3 py-2 rounded-md font-medium hover:text-red-500 ${
+                    class={`px-3 py-2 rounded-md font-medium hover:text-red-500 relative group ${
                         currentUrl === "/products"
                             ? "text-red-500 font-semibold"
                             : "text-gray-700"
                     } transition-all duration-200`}
                 >
                     Productos
+                    <span
+                        class={`absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full ${currentUrl === "/products" ? "w-full" : ""}`}
+                    ></span>
                 </a>
                 <div class="ml-1 relative flex items-center">
                     <a
                         href="/cart"
-                        class="p-2 rounded-full hover:bg-gray-100 transition-all duration-200 relative"
+                        class="p-2 rounded-full hover:bg-gray-100 transition-all duration-200 relative hover:scale-110 transform"
                         aria-label="Carrito de compras"
                     >
                         <svg
@@ -116,7 +119,7 @@ if (accessToken && refreshToken) {
                         </svg>
                         <span
                             id="cart-count"
-                            class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold shadow-sm"
+                            class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold shadow-md transition-all duration-300 animate-pulse-once"
                             >0</span
                         >
                     </a>
@@ -128,12 +131,26 @@ if (accessToken && refreshToken) {
                         ) : (
                             <a
                                 href="/signin"
-                                class={`inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm ${
+                                class={`inline-flex items-center px-4 py-2.5 border border-transparent text-sm font-medium rounded-md shadow-sm ${
                                     currentUrl === "/signin"
                                         ? "bg-red-500 text-white hover:bg-red-600"
-                                        : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
-                                } transition-all duration-200`}
+                                        : "bg-white text-gray-700 border-gray-200 hover:bg-red-50 hover:text-red-500 hover:border-red-100"
+                                } transition-all duration-200 transform hover:scale-105`}
                             >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4 mr-1.5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                    />
+                                </svg>
                                 Iniciar Sesión
                             </a>
                         )
@@ -143,37 +160,82 @@ if (accessToken && refreshToken) {
         </div>
     </div>
 
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="md:hidden hidden">
-        <div class="bg-white border-t border-gray-100 py-2 space-y-1">
+    <div
+        id="mobile-menu"
+        class="md:hidden hidden max-h-0 overflow-hidden transition-all duration-300"
+    >
+        <div class="bg-white py-2 space-y-1 px-4">
             <a
                 href="/"
-                class={`block px-4 py-3 rounded-md font-medium hover:bg-gray-50 ${
+                class={`flex items-center px-4 py-3 rounded-lg font-medium hover:bg-red-50 ${
                     currentUrl === "/"
-                        ? "text-red-500 font-semibold"
+                        ? "text-red-500 font-semibold bg-red-50"
                         : "text-gray-700"
                 } transition-all duration-200`}
             >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    ></path>
+                </svg>
                 Inicio
             </a>
             <a
                 href="/products"
-                class={`block px-4 py-3 rounded-md font-medium hover:bg-gray-50 ${
+                class={`flex items-center px-4 py-3 rounded-lg font-medium hover:bg-red-50 ${
                     currentUrl === "/products"
-                        ? "text-red-500 font-semibold"
+                        ? "text-red-500 font-semibold bg-red-50"
                         : "text-gray-700"
                 } transition-all duration-200`}
             >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 mr-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg>
                 Productos
             </a>
             <a
                 href="/cart"
-                class="block px-4 py-3 rounded-md font-medium hover:bg-gray-50 text-gray-700 transition-all duration-200 items-center justify-between"
+                class="flex items-center justify-between px-4 py-3 rounded-lg font-medium hover:bg-red-50 text-gray-700 transition-all duration-200"
             >
-                <span>Carrito</span>
+                <div class="flex items-center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.35 2.7A1 1 0 007.5 17h9a1 1 0 00.85-1.53L17 13M7 13V6a1 1 0 011-1h5a1 1 0 011 1v7"
+                        ></path>
+                    </svg>
+                    Carrito
+                </div>
                 <span
                     id="mobile-cart-count"
-                    class="bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold"
+                    class="bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold shadow-sm"
                 >
                     0
                 </span>
@@ -186,12 +248,22 @@ if (accessToken && refreshToken) {
                 ) : (
                     <a
                         href="/signin"
-                        class={`block px-4 py-3 rounded-md font-medium hover:bg-gray-50 ${
-                            currentUrl === "/signin"
-                                ? "text-red-500 font-semibold"
-                                : "text-gray-700"
-                        } transition-all duration-200`}
+                        class="flex items-center px-4 py-3 rounded-lg font-medium bg-red-50 text-red-500 hover:bg-red-100 transition-all duration-200"
                     >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                            />
+                        </svg>
                         Iniciar Sesión
                     </a>
                 )
@@ -209,12 +281,28 @@ if (accessToken && refreshToken) {
 
         if ($mobileMenuBtn && $mobileMenu) {
             $mobileMenuBtn.addEventListener("click", () => {
+                const isHidden = $mobileMenu.classList.contains("hidden");
+
                 $mobileMenu.classList.toggle("hidden");
+
+                if (isHidden) {
+                    setTimeout(() => {
+                        $mobileMenu.style.maxHeight = "500px";
+                    }, 10);
+                } else {
+                    $mobileMenu.style.maxHeight = "0";
+                    setTimeout(() => {
+                        if ($mobileMenu.style.maxHeight === "0px") {
+                            $mobileMenu.classList.add("hidden");
+                        }
+                    }, 300);
+                }
+
                 $menuOpen.classList.toggle("hidden");
                 $menuClose.classList.toggle("hidden");
                 $mobileMenuBtn.setAttribute(
                     "aria-expanded",
-                    $mobileMenu.classList.contains("hidden") ? "false" : "true",
+                    isHidden ? "true" : "false",
                 );
             });
         }
@@ -232,7 +320,13 @@ if (accessToken && refreshToken) {
             const count = cart.length;
 
             const desktopBadge = document.getElementById("cart-count");
-            if (desktopBadge) desktopBadge.textContent = count;
+            if (desktopBadge) {
+                desktopBadge.textContent = count;
+                desktopBadge.classList.remove("animate-pulse-once");
+                setTimeout(() => {
+                    desktopBadge.classList.add("animate-pulse-once");
+                }, 10);
+            }
 
             const mobileBadge = document.getElementById("mobile-cart-count");
             if (mobileBadge) mobileBadge.textContent = count;
@@ -250,10 +344,17 @@ if (accessToken && refreshToken) {
             $mobileMenuLinks.forEach((link) => {
                 link.addEventListener("click", () => {
                     if (window.innerWidth < 768) {
-                        $mobileMenu.classList.add("hidden");
-                        $menuOpen.classList.remove("hidden");
-                        $menuClose.classList.add("hidden");
-                        $mobileMenuBtn.setAttribute("aria-expanded", "false");
+                        $mobileMenu.style.maxHeight = "0";
+
+                        setTimeout(() => {
+                            $mobileMenu.classList.add("hidden");
+                            $menuOpen.classList.remove("hidden");
+                            $menuClose.classList.add("hidden");
+                            $mobileMenuBtn.setAttribute(
+                                "aria-expanded",
+                                "false",
+                            );
+                        }, 300);
                     }
                 });
             });
@@ -266,12 +367,38 @@ if (accessToken && refreshToken) {
             const currentScroll = window.pageYOffset;
 
             if (currentScroll > 50) {
-                header.classList.add("shadow-md");
+                header.classList.add("shadow-lg");
+                header.classList.add("bg-white/95");
+                header.classList.remove("bg-white/90");
             } else {
-                header.classList.remove("shadow-md");
+                header.classList.remove("shadow-lg");
+                header.classList.add("bg-white/90");
+                header.classList.remove("bg-white/95");
+            }
+
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.style.transform = "translateY(-100%)";
+            } else {
+                header.style.transform = "translateY(0)";
             }
 
             lastScroll = currentScroll;
         });
     });
 </script>
+
+<style>
+    @keyframes pulse-once {
+        0%,
+        100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.2);
+        }
+    }
+
+    .animate-pulse-once {
+        animation: pulse-once 0.5s ease-in-out;
+    }
+</style>

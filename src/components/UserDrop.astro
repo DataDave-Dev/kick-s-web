@@ -1,6 +1,5 @@
 ---
 import { AcronymFunction } from "../lib/utils";
-
 const userCookie = Astro.cookies.get("sb-user");
 let user = null;
 if (userCookie) {
@@ -10,65 +9,101 @@ if (userCookie) {
 } else {
     user = "";
 }
-
 const acronym = AcronymFunction(user.username);
 ---
 
-<div
-    id="dropdownButton"
-    class="relative inline-flex items-center hover:cursor-pointer justify-center w-10 h-10 overflow-hidden rounded-full bg-gray-100"
->
-    <span class="font-medium text-gray-600">{acronym}</span>
-</div>
-
-<div
-    id="userDropdown"
-    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-56"
->
-    <div class="px-4 py-3 text-sm text-gray-900">
-        <div>{user.username}</div>
-        <div class="font-medium truncate">{user.email}</div>
-    </div>
-    <ul
-        class="py-2 text-sm text-gray-700"
-        aria-labelledby="avatarButton"
+<div class="relative">
+    <button
+        id="dropdownButton"
+        class="flex items-center justify-center hover:cursor-pointer w-10 h-10 rounded-full bg-gray-100 focus:ring-2 focus:ring-blue-300 focus:outline-none"
+        type="button"
+        aria-expanded="false"
     >
-        <li>
-            <a
-                href="/orders"
-                class="block px-4 py-2 hover:bg-gray-100"
-                >Pedidos</a
+        <span class="font-medium text-gray-600">{acronym}</span>
+    </button>
+
+    <div
+        id="userDropdown"
+        class="z-50 hidden absolute right-0 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-64 max-w-[90vw]"
+    >
+        <div class="p-4 text-sm text-gray-900">
+            <div class="text-base font-semibold">{user.username}</div>
+            <div class="font-medium truncate text-gray-500">{user.email}</div>
+        </div>
+        
+        <ul class="py-2 text-sm text-gray-700">
+            <li>
+                <a
+                    href="/orders"
+                    class="flex items-center px-4 py-3 hover:bg-gray-100 active:bg-gray-200"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    Pedidos
+                </a>
+            </li>
+        </ul>
+        
+        <div class="py-1">
+            <form
+                action="/api/auth/signout"
+                method="get"
+                class="block"
             >
-        </li>
-    </ul>
-    <div class="py-1">
-        <form
-            action="/api/auth/signout"
-            method="get"
-            class="block px-4 py-3 md:p-0"
-        >
-            <button
-                type="submit"
-                class="block w-full text-start hover:cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-            >
-                Cerrar Sesión
-            </button>
-        </form>
+                <button
+                    type="submit"
+                    class="flex w-full hover:cursor-pointer items-center px-4 py-3 text-sm text-red-600 hover:bg-gray-100 active:bg-gray-200"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Cerrar Sesión
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 
 <script>
     import { Dropdown } from "flowbite";
-
-    document.addEventListener("astro:page-load", () => {
+    
+    function initializeDropdown() {
         const dropdownButton = document.getElementById("dropdownButton");
         const dropdownMenu = document.getElementById("userDropdown");
-
+        
         if (dropdownButton && dropdownMenu) {
             const dropdown = new Dropdown(dropdownMenu, dropdownButton, {
-                placement: "bottom-start",
+                placement: "bottom-end",
                 triggerType: "click",
+                offsetSkidding: 0,
+                offsetDistance: 10,
+            });
+            
+            document.addEventListener("click", (event) => {
+                const isClickInside = dropdownButton.contains(event.target as Node) || 
+                                    dropdownMenu.contains(event.target as Node);
+                
+                if (!isClickInside && !dropdownMenu.classList.contains("hidden")) {
+                    dropdown.hide();
+                }
+            });
+            
+            dropdownButton.setAttribute("aria-haspopup", "true");
+            
+            dropdownButton.addEventListener("click", () => {
+                const isExpanded = dropdownMenu.classList.contains("hidden") ? "false" : "true";
+                dropdownButton.setAttribute("aria-expanded", isExpanded);
             });
         }
-    });
+    }
+    
+    document.addEventListener("astro:page-load", initializeDropdown);
+    
+    if (document.readyState === "complete" || 
+        document.readyState === "interactive") {
+        setTimeout(initializeDropdown, 1);
+    } else {
+        document.addEventListener("DOMContentLoaded", initializeDropdown);
+    }
 </script>
