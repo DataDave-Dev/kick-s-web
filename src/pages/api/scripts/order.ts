@@ -15,13 +15,14 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
         const name = formData.get("firstName")?.toString();
         const lastname = formData.get("lastName")?.toString();
+        const userNumber = formData.get("number")?.toString();
         const country = formData.get("country")?.toString();
         const address = formData.get("address")?.toString();
         const city = formData.get("city")?.toString();
         const postalCode = formData.get("postalCode")?.toString();
         const cartItemsRaw = formData.get("cartItems")?.toString() || "[]";
 
-        if (!name || !lastname || !country || !address || !city || !postalCode) {
+        if (!name || !lastname || !country || !address || !city || !postalCode || !userNumber) {
             return new Response(JSON.stringify({
                 error: "Faltan campos requeridos para procesar la orden"
             }), {
@@ -94,7 +95,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
                 Ciudad: city,
                 CodigoPostal: postalCode,
                 Estatus: 1,
-                id_Usuario: user.id
+                id_Usuario: user.id,
+                Telefono: userNumber
             }]);
 
         if (orderError) {
