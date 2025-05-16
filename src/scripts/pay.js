@@ -3,6 +3,10 @@ document.addEventListener("astro:page-load", function () {
     setupModalListeners();
 });
 
+document.querySelector("form").addEventListener("submit", function () {
+    document.getElementById("cartItems").value = localStorage.getItem("cart") || "[]";
+});
+
 function getCart() {
     try {
         return JSON.parse(localStorage.getItem("cart") || "[]");
