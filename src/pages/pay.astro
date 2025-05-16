@@ -18,46 +18,96 @@ if (!accessToken && !refreshToken) {
             <div class="mb-10">
                 <div class="flex justify-between items-center">
                     <div class="flex flex-col items-center">
-                        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                        <div
+                            class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold"
+                        >
+                            1
+                        </div>
                         <span class="text-xs mt-1 font-medium">Carrito</span>
                     </div>
                     <div class="h-1 flex-1 bg-gray-200 mx-2">
                         <div class="h-full bg-red-500 w-full"></div>
                     </div>
                     <div class="flex flex-col items-center">
-                        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                        <div
+                            class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold"
+                        >
+                            2
+                        </div>
                         <span class="text-xs mt-1 font-medium">Envío</span>
                     </div>
                     <div class="h-1 flex-1 bg-gray-200 mx-2"></div>
                     <div class="flex flex-col items-center">
-                        <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">3</div>
-                        <span class="text-xs mt-1 font-medium text-gray-500">Pago</span>
+                        <div
+                            class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold"
+                        >
+                            3
+                        </div>
+                        <span class="text-xs mt-1 font-medium text-gray-500"
+                            >Pago</span
+                        >
                     </div>
                 </div>
             </div>
 
+            <div id="order-messages"></div>
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
                 <form
                     class="lg:col-span-3 bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100 space-y-5"
                     method="post"
                     id="checkoutForm"
                 >
-                    <h1 class="text-2xl md:text-3xl font-bold mb-6 text-gray-900">Información de Envío</h1>
+                    <h1
+                        class="text-2xl md:text-3xl font-bold mb-6 text-gray-900"
+                    >
+                        Información de Envío
+                    </h1>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="firstName" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                            <input id="firstName" name="firstName" type="text" required class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition" placeholder="Tu nombre" />
+                            <label
+                                for="firstName"
+                                class="block text-sm font-medium text-gray-700 mb-1"
+                                >Nombre</label
+                            >
+                            <input
+                                id="firstName"
+                                name="firstName"
+                                type="text"
+                                required
+                                class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition"
+                                placeholder="Tu nombre"
+                            />
                         </div>
                         <div>
-                            <label for="lastName" class="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
-                            <input id="lastName" name="lastName" type="text" required class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition" placeholder="Tu apellido" />
+                            <label
+                                for="lastName"
+                                class="block text-sm font-medium text-gray-700 mb-1"
+                                >Apellido</label
+                            >
+                            <input
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                                required
+                                class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition"
+                                placeholder="Tu apellido"
+                            />
                         </div>
                     </div>
 
                     <div>
-                        <label for="country" class="block text-sm font-medium text-gray-700 mb-1">País</label>
-                        <select id="country" name="country" required class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 appearance-none transition">
+                        <label
+                            for="country"
+                            class="block text-sm font-medium text-gray-700 mb-1"
+                            >País</label
+                        >
+                        <select
+                            id="country"
+                            name="country"
+                            required
+                            class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 appearance-none transition"
+                        >
                             <option value="">Selecciona un país</option>
                             <option value="MX">México</option>
                             <option value="US">Estados Unidos</option>
@@ -68,18 +118,50 @@ if (!accessToken && !refreshToken) {
                     </div>
 
                     <div>
-                        <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
-                        <input id="address" name="address" required class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition" placeholder="Calle y número" />
+                        <label
+                            for="address"
+                            class="block text-sm font-medium text-gray-700 mb-1"
+                            >Dirección</label
+                        >
+                        <input
+                            id="address"
+                            name="address"
+                            required
+                            class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition"
+                            placeholder="Calle y número"
+                        />
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
-                            <input id="city" name="city" type="text" required class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition" placeholder="Ciudad" />
+                            <label
+                                for="city"
+                                class="block text-sm font-medium text-gray-700 mb-1"
+                                >Ciudad</label
+                            >
+                            <input
+                                id="city"
+                                name="city"
+                                type="text"
+                                required
+                                class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition"
+                                placeholder="Ciudad"
+                            />
                         </div>
                         <div>
-                            <label for="postalCode" class="block text-sm font-medium text-gray-700 mb-1">Código Postal</label>
-                            <input id="postalCode" name="postalCode" type="text" required class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition" placeholder="12345" />
+                            <label
+                                for="postalCode"
+                                class="block text-sm font-medium text-gray-700 mb-1"
+                                >Código Postal</label
+                            >
+                            <input
+                                id="postalCode"
+                                name="postalCode"
+                                type="text"
+                                required
+                                class="block w-full rounded-lg border border-gray-300 focus:border-red-400 focus:ring focus:ring-red-200 focus:ring-opacity-50 py-2.5 px-3 transition"
+                                placeholder="12345"
+                            />
                         </div>
                     </div>
 
@@ -91,8 +173,18 @@ if (!accessToken && !refreshToken) {
                             id="openModal"
                             class="w-full bg-white hover:bg-gray-50 border border-gray-300 text-gray-800 font-medium py-3 px-4 rounded-xl shadow-sm transition flex items-center justify-center gap-2"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-red-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 4v16m8-8H4"></path>
                             </svg>
                             Agregar Método de Pago
                         </button>
@@ -102,22 +194,46 @@ if (!accessToken && !refreshToken) {
                         type="submit"
                         class="w-full mt-6 bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-4 rounded-xl shadow transition flex items-center justify-center gap-2"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"></path>
                         </svg>
                         Continuar al Pago
                     </button>
                 </form>
 
                 <div class="lg:col-span-2">
-                    <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100 mb-4 sticky top-4">
-                        <h2 class="text-xl font-bold mb-4 text-gray-900">Resumen de Pedido</h2>
-                        <div id="order-summary-items" class="space-y-4 mb-6"></div>
+                    <div
+                        class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100 mb-4 sticky top-4"
+                    >
+                        <h2 class="text-xl font-bold mb-4 text-gray-900">
+                            Resumen de Pedido
+                        </h2>
+                        <div id="order-summary-items" class="space-y-4 mb-6">
+                        </div>
                         <div class="mt-6">
-                            <div id="order-summary-totals" class="space-y-3 py-4 border-t border-dashed border-gray-200"></div>
-                            <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
+                            <div
+                                id="order-summary-totals"
+                                class="space-y-3 py-4 border-t border-dashed border-gray-200"
+                            >
+                            </div>
+                            <div
+                                class="flex justify-between items-center mt-4 pt-4 border-t border-gray-200"
+                            >
                                 <span class="text-lg font-bold">Total</span>
-                                <span id="order-summary-total" class="text-xl font-bold text-red-500"></span>
+                                <span
+                                    id="order-summary-total"
+                                    class="text-xl font-bold text-red-500"
+                                ></span>
                             </div>
                         </div>
                     </div>
@@ -130,14 +246,29 @@ if (!accessToken && !refreshToken) {
 
 <style>
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
-    .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .credit-card-focused { transform: translateY(-5px); box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.2); }
+    .animate-fade-in {
+        animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .credit-card-focused {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.2);
+    }
     @media (max-width: 640px) {
-        .p-8 { padding: 1.25rem !important; }
-        .text-3xl { font-size: 1.75rem !important; }
+        .p-8 {
+            padding: 1.25rem !important;
+        }
+        .text-3xl {
+            font-size: 1.75rem !important;
+        }
     }
 </style>
 

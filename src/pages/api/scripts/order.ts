@@ -1,8 +1,16 @@
 import type { APIRoute } from "astro";
 import { supabase } from "../../../lib/supabase";
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, cookies }) => {
     try {
+        const userCookie = cookies.get("sb-user");
+        let user = null;
+        if (userCookie) {
+            try {
+                user = JSON.parse(userCookie.value);
+            } catch { }
+        }
+
         const formData = await request.formData();
 
         const name = formData.get("firstName")?.toString();
@@ -49,7 +57,7 @@ export const POST: APIRoute = async ({ request }) => {
             .select("Consecutivo")
             .eq("Tipo", 1)
             .single();
-        
+
         console.log(mov)
 
         if (movError) {
@@ -85,7 +93,8 @@ export const POST: APIRoute = async ({ request }) => {
                 Pais: country,
                 Ciudad: city,
                 CodigoPostal: postalCode,
-                Estatus: 1
+                Estatus: 1,
+                id_Usuario: user.id
             }]);
 
         if (orderError) {
@@ -98,10 +107,10 @@ export const POST: APIRoute = async ({ request }) => {
             });
         }
 
-        const hasInvalidItems = cartItems.some(item => 
+        const hasInvalidItems = cartItems.some(item =>
             !item.Producto || !item.Cantidad || !item.Precio
         );
-        
+
         if (hasInvalidItems) {
             console.error("Invalid cart items detected:", cartItems);
             return new Response(JSON.stringify({

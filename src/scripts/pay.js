@@ -1,21 +1,18 @@
 document.addEventListener("astro:page-load", function () {
     renderOrderSummary();
     setupModalListeners();
-    setupFormSubmission(); // Add form submission handling
+    setupFormSubmission();
 });
 
-// New function to handle form submission via fetch
 function setupFormSubmission() {
     const form = document.getElementById("checkoutForm");
     if (!form) return;
-    
+
     form.addEventListener("submit", async function (e) {
-        e.preventDefault(); // Prevent default form submission
-        
-        // Set cart items from localStorage
+        e.preventDefault();
+
         document.getElementById("cartItems").value = localStorage.getItem("cart") || "[]";
-        
-        // Show loading state
+
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalBtnText = submitBtn.innerHTML;
         submitBtn.disabled = true;
@@ -25,37 +22,30 @@ function setupFormSubmission() {
             </svg>
             Procesando...
         `;
-        
-        // Clear any previous error messages
-        const existingError = document.getElementById("order-error-message");
-        if (existingError) existingError.remove();
-        
+
+        const messages = document.getElementById("order-messages");
+        if (messages) messages.innerHTML = "";
+
         try {
-            // Prepare form data
             const formData = new FormData(form);
-            
-            // Submit via fetch
+
             const response = await fetch("/api/scripts/order", {
                 method: "POST",
                 body: formData
             });
-            
+
             const result = await response.json();
-            
+
             if (!response.ok) {
                 throw new Error(result.error || "Ha ocurrido un error al procesar tu orden.");
             }
-            
-            // Success! 
-            // Clear cart
+
             localStorage.setItem("cart", "[]");
             if (window.updateCartCount) window.updateCartCount();
-            
-            // Redirect to orders page or show success message
+
             if (result.redirect) {
                 window.location.href = result.redirect;
             } else {
-                // Show success message
                 const successMessage = document.createElement("div");
                 successMessage.className = "bg-green-50 border border-green-100 rounded-xl p-3 mb-4 flex items-center animate-fade-in";
                 successMessage.innerHTML = `
@@ -64,11 +54,12 @@ function setupFormSubmission() {
                     </svg>
                     <span class="text-green-700 text-sm font-medium">¡Orden completada con éxito! Referencia: ${result.orderReference}</span>
                 `;
-                form.parentNode.insertBefore(successMessage, form);
+                if (messages) {
+                    messages.appendChild(successMessage);
+                }
                 form.reset();
             }
         } catch (error) {
-            // Show error message
             console.error("Error submitting order:", error);
             const errorMessage = document.createElement("div");
             errorMessage.id = "order-error-message";
@@ -79,9 +70,10 @@ function setupFormSubmission() {
                 </svg>
                 <span class="text-red-700 text-sm font-medium">${error.message}</span>
             `;
-            form.parentNode.insertBefore(errorMessage, form);
+            if (messages) {
+                messages.appendChild(errorMessage);
+            }
         } finally {
-            // Restore submit button
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalBtnText;
         }
@@ -140,10 +132,8 @@ function renderOrderSummary() {
 
     $items.innerHTML = html;
 
-    // Totales
-    const envio = cart.length ? 99 : 0;
     const impuestos = subTotal * 0.16;
-    const total = subTotal + impuestos + envio;
+    const total = subTotal + impuestos;
 
     $totals.innerHTML = `
         <div class="flex justify-between items-center">
@@ -153,10 +143,6 @@ function renderOrderSummary() {
         <div class="flex justify-between items-center">
             <span class="text-gray-600">Impuestos</span>
             <span class="font-medium">${formatCurrency(impuestos)}</span>
-        </div>
-        <div class="flex justify-between items-center">
-            <span class="text-gray-600">Envío</span>
-            <span class="font-medium">${formatCurrency(envio)}</span>
         </div>
     `;
     $total.textContent = formatCurrency(total);
