@@ -1,39 +1,120 @@
----
+--- 
 import Layout from "../layouts/Layout.astro";
 import SectionContainer from "../components/SectionContainer.astro";
 import ProductCard from "../components/ProductCard.astro";
 import { supabase } from "../lib/supabase";
 
-const { data: Productos, error } = await supabase.from("Productos").select("*");
+const { data: Productos, error: ProductosError } = await supabase
+    .from("Productos")
+    .select("*");
+
+const marcas = [...new Set(Productos?.map((p) => p.Marca))];
+const estilos = [...new Set(Productos?.map((p) => p.Estilo))];
+const categorias = [...new Set(Productos?.map((p) => p.Categoría))];
 ---
 
 <Layout>
-    <SectionContainer class="py-12 px-4 md:py-25">
-        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">Nuestros Productos</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-4">
-            {
-                Productos && Productos.length > 0 ? (
-                    Productos.map((producto) => (
-                        <ProductCard
-                            Producto_id={producto.Producto_id}
-                            Producto={producto.Producto}
-                            Descripcion={producto.Descripcion}
-                            Precio={producto.Precio}
-                            Cantidad={producto.Cantidad}
-                            Imagen={producto.Imagen}
-                            Categoria={producto.Categoría}
-                            Marca={producto.Marca}
-                            Estilo={producto.Estilo}
-                        />
-                    ))
-                ) : (
-                    <div class="col-span-full text-center">
-                        <p class="text-gray-500 text-lg">
-                            No hay productos disponibles.
-                        </p>
+    <SectionContainer class="py-25 px-4">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">
+            Nuestros Productos
+        </h1>
+
+        <div class="mb-8 bg-white rounded-lg shadow-md p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-semibold text-gray-700">Filtros</h2>
+                <button id="toggleFiltros" class="lg:hidden text-blue-600 flex items-center gap-1">
+                    <span>Mostrar filtros</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div id="filtrosContainer" class="lg:flex lg:flex-wrap lg:gap-4 hidden lg:block">
+                <div class="mb-4 lg:mb-0 lg:flex-1">
+                    <label for="filtroNombre" class="block text-sm font-medium text-gray-700 mb-1">Buscar producto</label>
+                    <div class="relative">
+                        <input id="filtroNombre" type="text" placeholder="Nombre del producto..." class="w-full p-2 pl-10 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
                     </div>
-                )
-            }
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+                    <div>
+                        <label for="filtroMarca" class="block text-sm font-medium text-gray-700 mb-1">Marca</label>
+                        <select id="filtroMarca" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition appearance-none bg-white">
+                            <option value="">Todas las Marcas</option>
+                            {marcas.map((m) => <option value={m}>{m}</option>)}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="filtroEstilo" class="block text-sm font-medium text-gray-700 mb-1">Estilo</label>
+                        <select id="filtroEstilo" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition appearance-none bg-white">
+                            <option value="">Todos los Estilos</option>
+                            {estilos.map((e) => <option value={e}>{e}</option>)}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="filtroCategoria" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                        <select id="filtroCategoria" class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition appearance-none bg-white">
+                            <option value="">Todas las Categorías</option>
+                            {categorias.map((c) => <option value={c}>{c}</option>)}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Rango de precio</label>
+                        <div class="flex gap-2 items-center">
+                            <input id="precioMin" type="number" placeholder="Min" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
+                            <span class="text-gray-500">-</span>
+                            <input id="precioMax" type="number" placeholder="Max" class="w-1/2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex justify-end">
+                    <button id="limpiarFiltros" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        Limpiar filtros
+                    </button>
+                </div>
+            </div>
         </div>
+
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+            <p id="contadorResultados" class="text-gray-600 mb-2 sm:mb-0">Mostrando <span id="numResultados">0</span> productos</p>
+            <div class="flex items-center">
+                <label for="ordenarPor" class="mr-2 text-gray-700">Ordenar por:</label>
+                <select id="ordenarPor" class="p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition appearance-none bg-white">
+                    <option value="relevancia">Relevancia</option>
+                    <option value="precioAsc">Precio: Menor a Mayor</option>
+                    <option value="precioDesc">Precio: Mayor a Menor</option>
+                    <option value="nombreAsc">Nombre: A-Z</option>
+                    <option value="nombreDesc">Nombre: Z-A</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="productosGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {Productos && Productos.length > 0 ? (
+                Productos.map((producto) => (
+                    <div data-nombre={producto.Producto.toLowerCase()} data-marca={producto.Marca} data-estilo={producto.Estilo} data-categoria={producto.Categoría} data-precio={producto.Precio}>
+                        <ProductCard {...producto} />
+                    </div>
+                ))
+            ) : (
+                <div class="col-span-full text-center py-16">No hay productos disponibles.</div>
+            )}
+        </div>
+
+        <script src="../scripts/products/filters.js"></script>
     </SectionContainer>
 </Layout>

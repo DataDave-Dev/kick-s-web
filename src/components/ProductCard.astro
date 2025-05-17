@@ -12,47 +12,31 @@ const {
 } = Astro.props;
 ---
 
-<div
-    class="rounded-2xl shadow-xl overflow-hidden bg-white flex flex-col hover:shadow-2xl transition-shadow duration-300 max-w-xs mx-auto sm:max-w-full"
->
+<div class="rounded-3xl shadow-lg overflow-hidden bg-white flex flex-col hover:shadow-2xl transition-all duration-300 max-w-xs mx-auto sm:max-w-full border border-gray-100">
     <div class="relative">
-        <img
-            src={Imagen}
-            alt={Producto}
-            class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-        />
+        <img src={Imagen} alt={Producto} class="w-full h-52 object-cover transition-transform duration-300 hover:scale-105" />
         {
             Cantidad === 0 && (
-                <span class="absolute top-2 right-2 bg-gray-800 text-white text-xs px-3 py-1 rounded-full opacity-90 font-bold">
+                <span class="absolute top-3 left-3 bg-gray-900 text-white text-[0.7rem] px-2 py-0.5 rounded-full uppercase tracking-wide opacity-90 font-semibold">
                     Sin stock
                 </span>
             )
         }
     </div>
-    <div class="p-4 flex flex-col flex-1">
-        <h2 class="text-lg md:text-xl font-extrabold mb-1 text-gray-900">
-            {Producto}
-        </h2>
-        <p class="text-gray-600 text-sm mb-2 line-clamp-2">{Descripcion}</p>
-        <div class="flex flex-wrap gap-2 text-xs mb-2">
-            <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded"
-                >Marca: <span class="font-semibold">{Marca}</span></span
-            >
-            <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded"
-                >Categoría: <span class="font-semibold">{Categoria}</span></span
-            >
-            <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded"
-                >Estilo: <span class="font-semibold">{Estilo}</span></span
-            >
+
+    <div class="p-5 flex flex-col flex-1">
+        <h2 class="text-xl font-bold mb-2 text-gray-900 leading-tight">{Producto}</h2>
+        <p class="text-gray-500 text-sm mb-3 line-clamp-2">{Descripcion}</p>
+
+        <div class="flex flex-wrap gap-1 text-[0.7rem] mb-3">
+            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Marca: <strong>{Marca}</strong></span>
+            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Categoría: <strong>{Categoria}</strong></span>
+            <span class="bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full">Estilo: <strong>{Estilo}</strong></span>
         </div>
-        <div
-            class="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-2 mb-4 gap-2"
-        >
-            <span class="text-gray-500 text-xs"
-                >Disponibles: <span class="font-semibold">{Cantidad}</span
-                ></span
-            >
-            <span class="text-lg font-bold text-red-500">
+
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-auto mb-4 gap-2">
+            <span class="text-gray-400 text-xs">Disponibles: <strong>{Cantidad}</strong></span>
+            <span class="text-2xl font-extrabold text-red-500">
                 {
                     Number(Precio).toLocaleString("es-MX", {
                         style: "currency",
@@ -61,9 +45,10 @@ const {
                 }
             </span>
         </div>
+
         <button
             type="button"
-            class="mt-auto bg-red-500 hover:bg-red-600 hover:cursor-pointer text-white font-bold py-2 px-4 rounded-full shadow transition-all w-full disabled:opacity-60 disabled:cursor-not-allowed"
+            class="mt-auto bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl shadow-lg transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={Cantidad === 0}
             onclick={`(function(){
                 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -100,17 +85,17 @@ const {
         .max-w-xs {
             max-width: 100%;
         }
-        .p-4 {
-            padding: 1rem !important;
+        .p-5 {
+            padding: 1.25rem !important;
         }
-        .h-48 {
-            height: 10rem !important;
-        }
-        .text-lg {
-            font-size: 1.125rem !important;
+        .h-52 {
+            height: 13rem !important;
         }
         .text-xl {
             font-size: 1.25rem !important;
+        }
+        .text-2xl {
+            font-size: 1.5rem !important;
         }
     }
 </style>
