@@ -274,6 +274,18 @@ if (accessToken && refreshToken) {
 
 <script is:inline>
     document.addEventListener("astro:page-load", () => {
+        // Throttle function to limit function execution rate
+        function throttle(callback, delay = 200) {
+            let lastCall = 0;
+            return function(...args) {
+                const now = Date.now();
+                if (now - lastCall >= delay) {
+                    lastCall = now;
+                    callback.apply(this, args);
+                }
+            };
+        }
+
         const $mobileMenuBtn = document.getElementById("mobile-menu-btn");
         const $mobileMenu = document.getElementById("mobile-menu");
         const $menuOpen = document.querySelector(".menu-open");
@@ -363,7 +375,8 @@ if (accessToken && refreshToken) {
         const header = document.querySelector("header");
         let lastScroll = 0;
 
-        window.addEventListener("scroll", () => {
+        // Throttled scroll handler to prevent too many history API calls
+        const handleScroll = throttle(() => {
             const currentScroll = window.pageYOffset;
 
             if (currentScroll > 50) {
@@ -383,7 +396,10 @@ if (accessToken && refreshToken) {
             }
 
             lastScroll = currentScroll;
-        });
+        }, 200); // 200ms throttle delay
+
+        // Use the throttled scroll handler
+        window.addEventListener("scroll", handleScroll, { passive: true });
     });
 </script>
 
