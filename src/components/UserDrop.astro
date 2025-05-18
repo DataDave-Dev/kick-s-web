@@ -98,7 +98,7 @@ const acronym = AcronymFunction(user.username);
         }
     }
     
-    document.addEventListener("astro:page-load", initializeDropdown);
+    document.addEventListener("DOMContentLoaded", initializeDropdown);
     
     if (document.readyState === "complete" || 
         document.readyState === "interactive") {
