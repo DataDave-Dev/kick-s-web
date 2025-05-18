@@ -273,8 +273,7 @@ if (accessToken && refreshToken) {
 </header>
 
 <script is:inline>
-    document.addEventListener("astro:page-load", () => {
-        // Throttle function to limit function execution rate
+    document.addEventListener("DOMContentLoaded", () => {
         function throttle(callback, delay = 200) {
             let lastCall = 0;
             return function(...args) {
@@ -375,7 +374,6 @@ if (accessToken && refreshToken) {
         const header = document.querySelector("header");
         let lastScroll = 0;
 
-        // Throttled scroll handler to prevent too many history API calls
         const handleScroll = throttle(() => {
             const currentScroll = window.pageYOffset;
 
