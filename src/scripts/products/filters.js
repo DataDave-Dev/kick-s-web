@@ -1,4 +1,4 @@
-document.addEventListener("astro:page-load", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const inputNombre = document.getElementById("filtroNombre");
     const selectMarca = document.getElementById("filtroMarca");
     const selectEstilo = document.getElementById("filtroEstilo");

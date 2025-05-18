@@ -1,4 +1,4 @@
-document.addEventListener("astro:page-load", function () {
+document.addEventListener("DOMContentLoaded", function () {
     renderOrderSummary();
     setupModalListeners();
     setupFormSubmission();

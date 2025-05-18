@@ -102,5 +102,4 @@ function initAnimations() {
         });
 }
 
-document.addEventListener("astro:page-load", initAnimations);
-document.addEventListener("astro:after-swap", initAnimations);
+document.addEventListener("DOMContentLoaded", initAnimations);
