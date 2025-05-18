@@ -370,34 +370,6 @@ if (accessToken && refreshToken) {
                 });
             });
         }
-
-        const header = document.querySelector("header");
-        let lastScroll = 0;
-
-        const handleScroll = throttle(() => {
-            const currentScroll = window.pageYOffset;
-
-            if (currentScroll > 50) {
-                header.classList.add("shadow-lg");
-                header.classList.add("bg-white/95");
-                header.classList.remove("bg-white/90");
-            } else {
-                header.classList.remove("shadow-lg");
-                header.classList.add("bg-white/90");
-                header.classList.remove("bg-white/95");
-            }
-
-            if (currentScroll > lastScroll && currentScroll > 100) {
-                header.style.transform = "translateY(-100%)";
-            } else {
-                header.style.transform = "translateY(0)";
-            }
-
-            lastScroll = currentScroll;
-        }, 200); // 200ms throttle delay
-
-        // Use the throttled scroll handler
-        window.addEventListener("scroll", handleScroll, { passive: true });
     });
 </script>
 
