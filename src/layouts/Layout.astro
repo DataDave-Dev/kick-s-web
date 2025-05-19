@@ -4,6 +4,7 @@ import "@fontsource-variable/onest";
 import Header from "../components/Header.astro";
 import "lenis/dist/lenis.css";
 import Footer from "../components/Footer.astro";
+import Analytics from "@vercel/analytics/astro";
 ---
 
 <!doctype html>
@@ -15,6 +16,7 @@ import Footer from "../components/Footer.astro";
 		<meta name="generator" content={Astro.generator} />
 		<title>Kick's Store</title>
 	</head>
+	<Analytics />
 	<Header />
 	<body>
 		<slot />
