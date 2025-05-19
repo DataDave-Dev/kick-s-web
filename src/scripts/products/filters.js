@@ -105,15 +105,5 @@ document.addEventListener("DOMContentLoaded", function () {
     btnLimpiarFiltros.addEventListener("click", limpiarFiltros);
     toggleFiltros.addEventListener("click", toggleFiltrosMovil);
 
-    if (window.innerWidth >= 1024) {
-        filtrosContainer.classList.remove("hidden");
-    }
-
-    window.addEventListener("resize", () => {
-        if (window.innerWidth >= 1024) {
-            filtrosContainer.classList.remove("hidden");
-        }
-    });
-
     filtrarProductos();
 });
