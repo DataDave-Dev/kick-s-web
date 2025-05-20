@@ -6,10 +6,9 @@ import { supabase } from '../../../lib/supabase';
 export const POST: APIRoute = async ({ request, cookies }) => {
     const form = await request.formData();
     const file = form.get('file') as File | null;
-
     const userCookie = cookies.get("sb-user");
     let user = null;
-
+    
     if (userCookie) {
         try {
             user = JSON.parse(userCookie.value);
@@ -53,11 +52,20 @@ export const POST: APIRoute = async ({ request, cookies }) => {
             token: import.meta.env.BLOB_READ_WRITE_TOKEN,
         });
 
-        const { data: user, error: userError } = await supabase.auth.updateUser({
+        const { data, error } = await supabase.auth.updateUser({
             data: {
                 avatar_url: blob.url,
             }
-        })
+        });
+
+        user.avatar_url = blob.url;
+        
+        cookies.set("sb-user", JSON.stringify(user), {
+            path: "/",
+            httpOnly: true,
+            sameSite: "lax",
+            secure: true
+        });
 
         return new Response(
             JSON.stringify({

@@ -1,8 +1,8 @@
 ---
 import SectionContainer from "../components/SectionContainer.astro";
 import Layout from "../layouts/Layout.astro";
+import ImageUpload from "../components/Modal/imageUpload.astro";
 
-import { AcronymFunction } from "../lib/utils";
 import { formatDate } from "../lib/utils";
 
 const userCookie = Astro.cookies.get("sb-user");
@@ -14,7 +14,7 @@ if (userCookie) {
 } else {
     user = "";
 }
-const acronym = AcronymFunction(user.name + ' ' + user.lastname);
+
 const date = formatDate(user.created)
 ---
 
@@ -28,13 +28,13 @@ const date = formatDate(user.created)
             
             <div class="border-b border-gray-200 mb-6">
                 <nav class="-mb-px flex space-x-8">
-                    <button id="tab-profile" class="tab-button border-red-500 text-red-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    <button id="tab-profile" class="tab-button hover:cursor-pointer border-red-500 text-red-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                         Perfil
                     </button>
-                    <button id="tab-security" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    <button id="tab-security" class="tab-button hover:cursor-pointer border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                         Seguridad
                     </button>
-                    <button id="tab-preferences" class="tab-button border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                    <button id="tab-preferences" class="tab-button hover:cursor-pointer border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
                         Preferencias
                     </button>
                 </nav>
@@ -71,7 +71,7 @@ const date = formatDate(user.created)
                                 <h3 class="text-lg font-medium text-gray-900">Información Personal</h3>
                             </div>
                             <div class="p-6">
-                                <form>
+                                <form method="post">
                                     <div class="grid grid-cols-6 gap-6">
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="first-name" class="block text-sm font-medium text-gray-700">Nombre</label>
@@ -171,17 +171,17 @@ const date = formatDate(user.created)
                                     <div class="space-y-4">
                                         <div>
                                             <label for="current-password" class="block text-sm font-medium text-gray-700">Contraseña actual</label>
-                                            <input type="password" name="current-password" id="current-password" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <input type="password" name="current-password" id="current-password" value="••••••••" disabled class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
                                         </div>
                                         
                                         <div>
                                             <label for="new-password" class="block text-sm font-medium text-gray-700">Nueva contraseña</label>
-                                            <input type="password" name="new-password" id="new-password" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <input type="password" name="new-password" minlength="8" id="new-password" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
                                         </div>
                                         
                                         <div>
                                             <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirmar nueva contraseña</label>
-                                            <input type="password" name="confirm-password" id="confirm-password" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <input type="password" name="confirm-password" minlength="8" id="confirm-password" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
                                         </div>
                                     </div>
                                     
@@ -191,59 +191,6 @@ const date = formatDate(user.created)
                                         </button>
                                     </div>
                                 </form>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white rounded-lg shadow mt-6">
-                            <div class="px-6 py-5 border-b border-gray-200">
-                                <h3 class="text-lg font-medium text-gray-900">Autenticación de dos factores</h3>
-                            </div>
-                            <div class="p-6">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <p class="text-sm text-gray-500">La autenticación de dos factores añade una capa adicional de seguridad a tu cuenta.</p>
-                                    </div>
-                                    <div class="ml-3 flex-shrink-0">
-                                        <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                            Configurar
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white rounded-lg shadow mt-6">
-                            <div class="px-6 py-5 border-b border-gray-200">
-                                <h3 class="text-lg font-medium text-gray-900">Sesiones activas</h3>
-                            </div>
-                            <div class="p-6">
-                                <div class="space-y-4">
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-900">Este dispositivo</p>
-                                            <p class="text-xs text-gray-500">Madrid, España · Firefox · Hace 2 minutos</p>
-                                        </div>
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            Actual
-                                        </span>
-                                    </div>
-                                    
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <p class="text-sm font-medium text-gray-900">iPhone 13</p>
-                                            <p class="text-xs text-gray-500">Barcelona, España · Safari · Hace 2 días</p>
-                                        </div>
-                                        <button type="button" class="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                            Cerrar sesión
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-6">
-                                    <button type="button" class="text-sm font-medium text-red-600 hover:text-red-500">
-                                        Cerrar todas las sesiones
-                                    </button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -363,126 +310,8 @@ const date = formatDate(user.created)
             </div>
         </div>
 
-        <!-- Modal para cargar los avatars -->
-         <div id="modal-upload-photo" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 bg-opacity-50">
-            <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto relative">
-                <button id="close-modal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                </button>
-                <h2 class="text-lg font-semibold text-gray-900 mb-4">Cambiar foto de perfil</h2>
-
-                <div class="flex flex-col items-center">
-                <div class="w-24 h-24 mb-4 rounded-full bg-gray-100 overflow-hidden">
-                    <img id="preview-image" src="" alt="Vista previa" class="object-cover w-full h-full hidden" />
-                </div>
-
-                <input type="file" id="file-input" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100"/>
-
-                <div class="mt-6 flex justify-end space-x-3 w-full">
-                    <button id="cancel-upload" class="px-4 py-2 text-sm text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200">
-                    Cancelar
-                    </button>
-                    <button id="confirm-upload" class="px-4 py-2 text-sm text-white bg-red-600 rounded-md hover:bg-red-700">
-                    Guardar
-                    </button>
-                </div>
-                </div>
-            </div>
-        </div>
+        <ImageUpload />
     </SectionContainer>
 </Layout>
 
-<script is:inline>
-document.addEventListener('DOMContentLoaded', function () {
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            tabButtons.forEach(btn => {
-                btn.classList.remove('border-red-500', 'text-red-600');
-                btn.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
-            });
-
-            tabContents.forEach(content => {
-                content.classList.add('hidden');
-                content.classList.remove('block');
-            });
-
-            button.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
-            button.classList.add('border-red-500', 'text-red-600');
-
-            const tabId = button.id.replace('tab-', 'content-');
-            document.getElementById(tabId).classList.remove('hidden');
-            document.getElementById(tabId).classList.add('block');
-        });
-    });
-
-    const modal = document.getElementById('modal-upload-photo');
-    const openBtn = document.getElementById('open-modal');
-    const closeBtn = document.getElementById('close-modal');
-    const cancelBtn = document.getElementById('cancel-upload');
-    const confirmBtn = document.getElementById('confirm-upload');
-    const fileInput = document.getElementById('file-input');
-    const previewImg = document.getElementById('preview-image');
-    const avatarImg = document.querySelector('img[alt="Avatar de usuario"]');
-
-    openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
-    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-    cancelBtn.addEventListener('click', () => {
-        modal.classList.add('hidden');
-        fileInput.value = "";
-        previewImg.src = "";
-        previewImg.classList.add('hidden');
-    });
-
-    fileInput.addEventListener('change', function () {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                previewImg.src = e.target.result;
-                previewImg.classList.remove('hidden');
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    confirmBtn.addEventListener('click', async () => {
-        const file = fileInput.files[0];
-        if (!file) {
-            alert("Selecciona una imagen antes de continuar.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("file", file);
-
-        try {
-            const res = await fetch("/api/user/upload", {
-                method: "POST",
-                body: formData,
-            });
-
-            const data = await res.json();
-
-            if (!res.ok || !data.url) {
-                throw new Error(data.error || "Error al subir la imagen");
-            }
-
-            avatarImg.src = data.url;
-
-            fileInput.value = "";
-            previewImg.src = "";
-            previewImg.classList.add('hidden');
-            modal.classList.add('hidden');
-
-        } catch (error) {
-            console.error("Error al subir imagen:", error);
-            alert("Ocurrió un error al subir la imagen.");
-        }
-    });
-});
-</script>
+<script src="../scripts/settings/settingsUser"></script>
