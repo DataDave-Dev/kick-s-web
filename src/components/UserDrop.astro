@@ -9,7 +9,7 @@ if (userCookie) {
 } else {
     user = "";
 }
-const acronym = AcronymFunction(user.username);
+const acronym = AcronymFunction(user.name + " " + user.lastname);
 ---
 
 <div class="relative">
@@ -27,36 +27,76 @@ const acronym = AcronymFunction(user.username);
         class="z-50 hidden absolute right-0 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-64 max-w-[90vw]"
     >
         <div class="p-4 text-sm text-gray-900">
-            <div class="text-base font-semibold">{user.username}</div>
+            <div class="text-base font-semibold">
+                {user.name + " " + user.lastname}
+            </div>
             <div class="font-medium truncate text-gray-500">{user.email}</div>
         </div>
-        
+
         <ul class="py-2 text-sm text-gray-700">
             <li>
                 <a
                     href="/orders"
                     class="flex items-center px-4 py-3 hover:bg-gray-100 active:bg-gray-200"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                        ></path>
                     </svg>
                     Pedidos
                 </a>
             </li>
+            <li>
+                <a
+                    href="/settings"
+                    class="flex items-center px-4 py-3 hover:bg-gray-100 active:bg-gray-200"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        enable-background="new 0 0 24 24"
+                        class="w-5 h-5 mr-2"
+                        fill="#434343"
+                        viewBox="0 0 24 24"
+                        ><g
+                            ><path d="M0,0h24v24H0V0z" fill="none"></path><path
+                                d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"
+                            ></path></g
+                        ></svg
+                    >
+                    Configuración
+                </a>
+            </li>
         </ul>
-        
+
         <div class="py-1">
-            <form
-                action="/api/auth/signout"
-                method="get"
-                class="block"
-            >
+            <form action="/api/auth/signout" method="get" class="block">
                 <button
                     type="submit"
                     class="flex w-full hover:cursor-pointer items-center px-4 py-3 text-sm text-red-600 hover:bg-gray-100 active:bg-gray-200"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                        ></path>
                     </svg>
                     Cerrar Sesión
                 </button>
@@ -67,11 +107,11 @@ const acronym = AcronymFunction(user.username);
 
 <script>
     import { Dropdown } from "flowbite";
-    
+
     function initializeDropdown() {
         const dropdownButton = document.getElementById("dropdownButton");
         const dropdownMenu = document.getElementById("userDropdown");
-        
+
         if (dropdownButton && dropdownMenu) {
             const dropdown = new Dropdown(dropdownMenu, dropdownButton, {
                 placement: "bottom-end",
@@ -79,29 +119,37 @@ const acronym = AcronymFunction(user.username);
                 offsetSkidding: 0,
                 offsetDistance: 10,
             });
-            
+
             document.addEventListener("click", (event) => {
-                const isClickInside = dropdownButton.contains(event.target as Node) || 
-                                    dropdownMenu.contains(event.target as Node);
-                
-                if (!isClickInside && !dropdownMenu.classList.contains("hidden")) {
+                const isClickInside =
+                    dropdownButton.contains(event.target as Node) ||
+                    dropdownMenu.contains(event.target as Node);
+
+                if (
+                    !isClickInside &&
+                    !dropdownMenu.classList.contains("hidden")
+                ) {
                     dropdown.hide();
                 }
             });
-            
+
             dropdownButton.setAttribute("aria-haspopup", "true");
-            
+
             dropdownButton.addEventListener("click", () => {
-                const isExpanded = dropdownMenu.classList.contains("hidden") ? "false" : "true";
+                const isExpanded = dropdownMenu.classList.contains("hidden")
+                    ? "false"
+                    : "true";
                 dropdownButton.setAttribute("aria-expanded", isExpanded);
             });
         }
     }
-    
+
     document.addEventListener("DOMContentLoaded", initializeDropdown);
-    
-    if (document.readyState === "complete" || 
-        document.readyState === "interactive") {
+
+    if (
+        document.readyState === "complete" ||
+        document.readyState === "interactive"
+    ) {
         setTimeout(initializeDropdown, 1);
     } else {
         document.addEventListener("DOMContentLoaded", initializeDropdown);

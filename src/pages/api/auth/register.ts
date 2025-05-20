@@ -5,9 +5,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
   const email = formData.get("email")?.toString();
   const password = formData.get("password")?.toString();
-  const username = formData.get("username")?.toString();
+  const name = formData.get("name")?.toString();
+  const lastname = formData.get("lastname")?.toString();
 
-  if (!email || !password || !username) {
+  if (!email || !password || !name || !lastname) {
     return redirect("/register?error=El+correo+electrónico+,+la+contraseña+y+el+nombre+de+usuario+son+requeridos");
   }
 
@@ -22,7 +23,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   const { data: user, error: userError } = await supabase.auth.updateUser({
     data: {
-      username: username
+      name: name,
+      lastname: lastname
     }
   });
 

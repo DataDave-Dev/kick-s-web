@@ -26,7 +26,11 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
         cookies.set("sb-user", JSON.stringify({
             id: user.id,
             email: user.email,
-            username: user.user_metadata.username || null
+            name: user.user_metadata.name || " ",
+            lastname: user.user_metadata.lastname || " ",
+            phone: user.phone || " ",
+            created: user.created_at,
+            avatar_url: user.user_metadata.avatar_url,
         }), {
             path: "/",
             httpOnly: true,
