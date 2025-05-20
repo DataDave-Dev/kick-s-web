@@ -71,16 +71,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await res.json();
 
-            if (!res.ok || !data.url) {
+            if (!res.ok) {
                 throw new Error(data.error || "Error al subir la imagen");
             }
-
-            avatarImg.src = data.url;
 
             fileInput.value = "";
             previewImg.src = "";
             previewImg.classList.add('hidden');
             modal.classList.add('hidden');
+
+            location.reload();
 
         } catch (error) {
             console.error("Error al subir imagen:", error);

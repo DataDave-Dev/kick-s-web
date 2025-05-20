@@ -4,6 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import ImageUpload from "../components/Modal/ImageUpload.astro";
 
 import { formatDate } from "../lib/utils";
+import { supabase } from "../lib/supabase";
 
 const userCookie = Astro.cookies.get("sb-user");
 
@@ -18,6 +19,12 @@ if (userCookie) {
 }
 
 const date = formatDate(user.created)
+
+const { data: addressUser, error: addressUserError } = await supabase
+  .from('Direcciones')
+  .select('Direccion, Ciudad, Pais, CodigoPostal, Estado')
+  .eq('id_usuario', user.id)
+  .single();
 ---
 
 <Layout title="Configuración de Usuario">
@@ -76,23 +83,23 @@ const date = formatDate(user.created)
                                 <form method="post" action="/api/user/updateUser">
                                     <div class="grid grid-cols-6 gap-6">
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label for="first-name" class="block text-sm font-medium text-gray-700">Nombre</label>
-                                            <input type="text" name="first-name" id="first-name" value=`${user.name}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <label for="first-name" class="block text-sm font-medium text-gray-700">Nombre(s)</label>
+                                            <input type="text" name="first-name" id="first-name" value=`${user.name}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
                                         </div>
-                                        
+
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label for="last-name" class="block text-sm font-medium text-gray-700">Apellido</label>
-                                            <input type="text" name="last-name" id="last-name" value=`${user.lastname}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <label for="last-name" class="block text-sm font-medium text-gray-700">Apellido(s)</label>
+                                            <input type="text" name="last-name" id="last-name" value=`${user.lastname}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
                                         </div>
                                         
                                         <div class="col-span-6">
                                             <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
-                                            <input type="email" name="email" id="email" value=`${user.email}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <input type="email" name="email" id="email" value=`${user.email}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm" required>
                                         </div>
                                         
                                         <div class="col-span-6">
                                             <label for="phone" class="block text-sm font-medium text-gray-700">Teléfono</label>
-                                            <input type="tel" name="phone" id="phone" maxlength="10" minlength="10" value=`${user.phone}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <input type="tel" name="phone" id="phone" maxlength="10" minlength="10" value=`${user.phone}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm" required pattern="^[0-9]{10}$">
                                         </div>
                                     </div>
                                     
@@ -113,29 +120,34 @@ const date = formatDate(user.created)
                                 <form>
                                     <div class="grid grid-cols-6 gap-6">
                                         <div class="col-span-6">
-                                            <label for="street" class="block text-sm font-medium text-gray-700">Calle y número</label>
-                                            <input type="text" name="street" id="street" value="Calle Ejemplo 123" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <label for="street" class="block text-sm font-medium text-gray-700">Dirección:</label>
+                                            <input type="text" name="street" id="street" value=`${addressUser?.Direccion? addressUser?.Direccion : ''}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
                                         </div>
                                         
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="city" class="block text-sm font-medium text-gray-700">Ciudad</label>
-                                            <input type="text" name="city" id="city" value="Madrid" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <input type="text" name="city" id="city" value=`${addressUser?.Ciudad? addressUser?.Ciudad : ''}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
                                         </div>
                                         
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="postal-code" class="block text-sm font-medium text-gray-700">Código postal</label>
-                                            <input type="text" name="postal-code" id="postal-code" value="28001" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <input type="text" name="postal-code" id="postal-code" value=`${addressUser?.CodigoPostal? addressUser?.CodigoPostal : ''}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                        </div>
+
+                                        <div class="col-span-6 sm:col-span-3">
+                                            <label for="postal-code" class="block text-sm font-medium text-gray-700">Estado</label>
+                                            <input type="text" name="postal-code" id="postal-code" value=`${addressUser?.Estado? addressUser?.Estado : ''}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
                                         </div>
                                         
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="country" class="block text-sm font-medium text-gray-700">País</label>
                                             <select id="country" name="country" class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
-                                                <option value="">Selecciona un país</option>
-                                                <option value="MX">México</option>
-                                                <option value="US">Estados Unidos</option>
-                                                <option value="ES">España</option>
-                                                <option value="CO">Colombia</option>
-                                                <option value="AR">Argentina</option>
+                                                {!addressUser?.Pais && <option value="">Selecciona un país</option>}
+                                                <option value="MX" selected={addressUser?.Pais === 'MX'}>México</option>
+                                                <option value="US" selected={addressUser?.Pais === 'US'}>Estados Unidos</option>
+                                                <option value="ES" selected={addressUser?.Pais === 'ES'}>España</option>
+                                                <option value="CO" selected={addressUser?.Pais === 'CO'}>Colombia</option>
+                                                <option value="AR" selected={addressUser?.Pais === 'AR'}>Argentina</option>
                                             </select>
                                         </div>
                                     </div>

@@ -1,14 +1,15 @@
 import { put } from '@vercel/blob';
-import { randomUUID } from 'crypto';
 import type { APIRoute } from "astro";
 import { supabase } from '../../../lib/supabase';
+import { randomUUID } from 'crypto';
+import sharp from 'sharp';
 
 export const POST: APIRoute = async ({ request, cookies }) => {
     const form = await request.formData();
     const file = form.get('file') as File | null;
     const userCookie = cookies.get("sb-user");
     let user = null;
-    
+
     if (userCookie) {
         try {
             user = JSON.parse(userCookie.value);
@@ -43,13 +44,20 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         );
     }
 
-    const extension = file.name.split('.').pop();
-    const filename = `${user.id}-${randomUUID()}.${extension}`;
-
     try {
-        const blob = await put(`usersAvatars/${filename}`, file, {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+
+        const webpBuffer = await sharp(buffer)
+            .webp({ quality: 80 })
+            .toBuffer();
+
+        const filename = `${user.id}-${randomUUID()}.webp`;
+
+        const blob = await put(`usersAvatars/${filename}`, webpBuffer, {
             access: 'public',
             token: import.meta.env.BLOB_READ_WRITE_TOKEN,
+            allowOverwrite: true
         });
 
         const { data, error } = await supabase.auth.updateUser({
@@ -59,7 +67,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         });
 
         user.avatar_url = blob.url;
-        
+
         cookies.set("sb-user", JSON.stringify(user), {
             path: "/",
             httpOnly: true,
@@ -75,7 +83,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
             { headers: { 'Content-Type': 'application/json' } }
         );
     } catch (error) {
-        console.error('Error al subir el archivo:', error);
+        console.error('Error al procesar la imagen:', error);
         return new Response(
             JSON.stringify({ error: 'Error al subir el archivo' }),
             { status: 500, headers: { 'Content-Type': 'application/json' } }

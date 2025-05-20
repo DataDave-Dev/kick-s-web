@@ -22,7 +22,6 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (user) {
-
         cookies.set("sb-user", JSON.stringify({
             id: user.id,
             email: user.email,

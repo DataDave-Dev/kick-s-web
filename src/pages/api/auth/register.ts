@@ -9,27 +9,37 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const lastname = formData.get("lastname")?.toString();
 
   if (!email || !password || !name || !lastname) {
-    return redirect("/register?error=El+correo+electrónico+,+la+contraseña+y+el+nombre+de+usuario+son+requeridos");
+    return redirect("/register?error=El+correo+electrónico,+la+contraseña+y+el+nombre+de+usuario+son+requeridos");
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
     email,
     password,
   });
 
-  if (error) {
-    return redirect(`/register?error=${encodeURIComponent(error.message)}`);
+  if (signUpError || !signUpData.user) {
+    return redirect(`/register?error=${encodeURIComponent(signUpError?.message || "Error al registrar")}`);
   }
 
-  const { data: user, error: userError } = await supabase.auth.updateUser({
+  const userId = signUpData.user.id;
+
+  const { error: userUpdateError } = await supabase.auth.updateUser({
     data: {
-      name: name,
-      lastname: lastname
-    }
+      name,
+      lastname,
+    },
   });
 
-  if (userError) {
-    return redirect(`/register?error=${encodeURIComponent(userError.message)}`);
+  if (userUpdateError) {
+    return redirect(`/register?error=${encodeURIComponent(userUpdateError.message)}`);
+  }
+
+  const { error: addressUserError } = await supabase
+    .from("Direcciones")
+    .insert([{ id_usuario: userId }]);
+
+  if (addressUserError) {
+    return redirect(`/register?error=${encodeURIComponent(addressUserError.message)}`);
   }
 
   return redirect("/register?success=ok");
