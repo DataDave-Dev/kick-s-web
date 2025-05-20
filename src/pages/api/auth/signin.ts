@@ -28,7 +28,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
             email: user.email,
             name: user.user_metadata.name || " ",
             lastname: user.user_metadata.lastname || " ",
-            phone: user.phone || " ",
+            phone: user.user_metadata.phone || " ",
             created: user.created_at,
             avatar_url: user.user_metadata.avatar_url,
         }), {

@@ -17,7 +17,11 @@ if (userCookie) {
         type="button"
         aria-expanded="false"
     >
-        <img src=`${user.avatar_url}` class="w-10 h-10 rounded-full">
+        <img 
+            src={user.avatar_url ? user.avatar_url : "https://ryfyzi0irxnxik9b.public.blob.vercel-storage.com/usersAvatars/profile-user-wgXBjyJCxSTuVVLhk71ExXAsUw0hIP.webp"} 
+            class="w-10 h-10 rounded-full" 
+            alt="User Avatar"
+            />
     </button>
 
     <div
