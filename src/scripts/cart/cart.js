@@ -62,7 +62,6 @@ function renderCart() {
 
         html += `</div>`;
 
-        // Agregar el resumen del carrito
         const impuestos = subTotal * 0.16;
         const total = subTotal + impuestos;
 
@@ -102,8 +101,8 @@ function renderCart() {
                     </svg>
                     <h2 class="text-xl xs:text-2xl font-bold mb-2">Tu carrito está vacío</h2>
                     <p class="mb-8 text-sm xs:text-base">Agrega algunos productos para comenzar a comprar</p>
-                    <a href="/products" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 xs:py-3 px-6 xs:px-8 rounded-full shadow transition-all text-sm xs:text-base">
-                        Ver productos
+                    <a href="/shop" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 xs:py-3 px-6 xs:px-8 rounded-full shadow transition-all text-sm xs:text-base">
+                        Ver Tienda
                     </a>
                 </div>
                 `;

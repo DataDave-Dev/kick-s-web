@@ -6,6 +6,14 @@ import ImageUpload from "../components/Modal/ImageUpload.astro";
 import { formatDate } from "../lib/utils";
 import { supabase } from "../lib/supabase";
 
+const { cookies, redirect } = Astro;
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (!accessToken && !refreshToken) {
+    return redirect("/signin");
+}
+
 const userCookie = Astro.cookies.get("sb-user");
 
 let user = null;
@@ -22,7 +30,7 @@ const date = formatDate(user.created)
 
 const { data: addressUser, error: addressUserError } = await supabase
   .from('Direcciones')
-  .select('Direccion, Ciudad, Pais, CodigoPostal, Estado')
+  .select('Direccion, Ciudad, Pais, CodigoPostal, Estado, MismaParaFacturacion')
   .eq('id_usuario', user.id)
   .single();
 ---
@@ -104,7 +112,7 @@ const { data: addressUser, error: addressUserError } = await supabase
                                     </div>
                                     
                                     <div class="mt-6">
-                                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        <button type="submit" class="inline-flex hover:cursor-pointer justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                             Guardar cambios
                                         </button>
                                     </div>
@@ -117,11 +125,11 @@ const { data: addressUser, error: addressUserError } = await supabase
                                 <h3 class="text-lg font-medium text-gray-900">Dirección de Envío</h3>
                             </div>
                             <div class="p-6">
-                                <form>
+                                <form method="post" action="/api/user/updateAddress">
                                     <div class="grid grid-cols-6 gap-6">
                                         <div class="col-span-6">
-                                            <label for="street" class="block text-sm font-medium text-gray-700">Dirección:</label>
-                                            <input type="text" name="street" id="street" value=`${addressUser?.Direccion? addressUser?.Direccion : ''}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <label for="address" class="block text-sm font-medium text-gray-700">Dirección:</label>
+                                            <input type="text" name="address" id="address" value=`${addressUser?.Direccion? addressUser?.Direccion : ''}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
                                         </div>
                                         
                                         <div class="col-span-6 sm:col-span-3">
@@ -135,8 +143,8 @@ const { data: addressUser, error: addressUserError } = await supabase
                                         </div>
 
                                         <div class="col-span-6 sm:col-span-3">
-                                            <label for="postal-code" class="block text-sm font-medium text-gray-700">Estado</label>
-                                            <input type="text" name="postal-code" id="postal-code" value=`${addressUser?.Estado? addressUser?.Estado : ''}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <label for="state" class="block text-sm font-medium text-gray-700">Estado</label>
+                                            <input type="text" name="state" id="state" value=`${addressUser?.Estado? addressUser?.Estado : ''}` class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
                                         </div>
                                         
                                         <div class="col-span-6 sm:col-span-3">
@@ -153,14 +161,14 @@ const { data: addressUser, error: addressUserError } = await supabase
                                     </div>
                                     
                                     <div class="mt-6 flex items-center">
-                                        <input id="same-billing" name="same-billing" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked>
+                                        <input id="same-billing" name="same-billing" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked={addressUser?.MismaParaFacturacion}>
                                         <label for="same-billing" class="ml-2 block text-sm text-gray-900">
-                                            Usar como dirección de facturación
+                                            Usar como dirección predeterminada
                                         </label>
                                     </div>
                                     
                                     <div class="mt-6">
-                                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        <button type="submit" class="inline-flex hover:cursor-pointer justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                             Guardar dirección
                                         </button>
                                     </div>
@@ -175,11 +183,11 @@ const { data: addressUser, error: addressUserError } = await supabase
                                 <h3 class="text-lg font-medium text-gray-900">Cambiar Contraseña</h3>
                             </div>
                             <div class="p-6">
-                                <form>
+                                <form method="post" action="/api/user/updatePassword">
                                     <div class="space-y-4">
                                         <div>
                                             <label for="current-password" class="block text-sm font-medium text-gray-700">Contraseña actual</label>
-                                            <input type="password" name="current-password" id="current-password" value="••••••••" disabled class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                            <input type="password" name="current-password" id="current-password" value="••••••••" disabled class="mt-1 block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
                                         </div>
                                         
                                         <div>
@@ -241,33 +249,7 @@ const { data: addressUser, error: addressUserError } = await supabase
                                             <p class="text-gray-500">Mantente al día con nuestras últimas noticias y artículos.</p>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="mt-8">
-                                    <h4 class="text-sm font-medium text-gray-900 mb-4">Idioma y moneda</h4>
-                                    
-                                    <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-                                        <div>
-                                            <label for="language" class="block text-sm font-medium text-gray-700">Idioma</label>
-                                            <select id="language" name="language" class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
-                                                <option>Español</option>
-                                                <option>English</option>
-                                                <option>Français</option>
-                                                <option>Deutsch</option>
-                                            </select>
-                                        </div>
-                                        
-                                        <div>
-                                            <label for="currency" class="block text-sm font-medium text-gray-700">Moneda</label>
-                                            <select id="currency" name="currency" class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
-                                                <option>EUR (€)</option>
-                                                <option>USD ($)</option>
-                                                <option>GBP (£)</option>
-                                                <option>JPY (¥)</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>                    
                                 
                                 <div class="mt-8">
                                     <h4 class="text-sm font-medium text-gray-900 mb-4">Preferencias de privacidad</h4>
