@@ -33,6 +33,12 @@ const { data: addressUser, error: addressUserError } = await supabase
   .select('Direccion, Ciudad, Pais, CodigoPostal, Estado, MismaParaFacturacion')
   .eq('id_usuario', user.id)
   .single();
+
+const { data: preferencesUser, error: preferencesUserError} = await supabase
+    .from("PreferenciasUsuarios")
+    .select('Ofertas, ActualizacionesPedidos, Boletin, Cookiesfuncionales, Cookiesanaliticas, Cookiesmarketing')
+    .eq('id_usuario', user.id)
+    .single();
 ---
 
 <Layout title="Configuración de Usuario">
@@ -216,13 +222,13 @@ const { data: addressUser, error: addressUserError } = await supabase
                             <div class="px-6 py-5 border-b border-gray-200">
                                 <h3 class="text-lg font-medium text-gray-900">Preferencias</h3>
                             </div>
-                            <div class="p-6">
+                            <form class="p-6" method="post" action="/api/user/updatePreferences">
                                 <h4 class="text-sm font-medium text-gray-900 mb-4">Notificaciones</h4>
                                 
                                 <div class="space-y-4">
                                     <div class="flex items-start">
                                         <div class="flex items-center h-5">
-                                            <input id="email-offers" name="email-offers" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked>
+                                            <input id="email-offers" name="email-offers" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked={preferencesUser?.Ofertas}>
                                         </div>
                                         <div class="ml-3 text-sm">
                                             <label for="email-offers" class="font-medium text-gray-700">Ofertas y promociones</label>
@@ -232,7 +238,7 @@ const { data: addressUser, error: addressUserError } = await supabase
                                     
                                     <div class="flex items-start">
                                         <div class="flex items-center h-5">
-                                            <input id="order-updates" name="order-updates" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked>
+                                            <input id="order-updates" name="order-updates" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked={preferencesUser?.ActualizacionesPedidos}>
                                         </div>
                                         <div class="ml-3 text-sm">
                                             <label for="order-updates" class="font-medium text-gray-700">Actualizaciones de pedidos</label>
@@ -242,7 +248,7 @@ const { data: addressUser, error: addressUserError } = await supabase
                                     
                                     <div class="flex items-start">
                                         <div class="flex items-center h-5">
-                                            <input id="newsletter" name="newsletter" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
+                                            <input id="newsletter" name="newsletter" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked={preferencesUser?.Boletin}>
                                         </div>
                                         <div class="ml-3 text-sm">
                                             <label for="newsletter" class="font-medium text-gray-700">Boletín informativo</label>
@@ -257,7 +263,7 @@ const { data: addressUser, error: addressUserError } = await supabase
                                     <div class="space-y-4">
                                         <div class="flex items-start">
                                             <div class="flex items-center h-5">
-                                                <input id="cookies" name="cookies" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked>
+                                                <input id="cookies" name="cookies" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked={preferencesUser?.Cookiesfuncionales}>
                                             </div>
                                             <div class="ml-3 text-sm">
                                                 <label for="cookies" class="font-medium text-gray-700">Cookies funcionales</label>
@@ -267,7 +273,7 @@ const { data: addressUser, error: addressUserError } = await supabase
                                         
                                         <div class="flex items-start">
                                             <div class="flex items-center h-5">
-                                                <input id="analytics" name="analytics" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked>
+                                                <input id="analytics" name="analytics" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked={preferencesUser?.Cookiesanaliticas}>
                                             </div>
                                             <div class="ml-3 text-sm">
                                                 <label for="analytics" class="font-medium text-gray-700">Cookies analíticas</label>
@@ -277,7 +283,7 @@ const { data: addressUser, error: addressUserError } = await supabase
                                         
                                         <div class="flex items-start">
                                             <div class="flex items-center h-5">
-                                                <input id="marketing" name="marketing" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
+                                                <input id="marketing" name="marketing" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" checked={preferencesUser?.Cookiesmarketing}>
                                             </div>
                                             <div class="ml-3 text-sm">
                                                 <label for="marketing" class="font-medium text-gray-700">Cookies de marketing</label>
@@ -292,8 +298,8 @@ const { data: addressUser, error: addressUserError } = await supabase
                                         Guardar preferencias
                                     </button>
                                 </div>
-                            </div>
-                        </div>
+                            </form>
+                        </form>
                     </div>
                 </div>
             </div>
