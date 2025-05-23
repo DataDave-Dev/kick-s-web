@@ -35,7 +35,7 @@ const categorias = [...new Set(Productos?.map((p) => p.Categoria))];
                             </svg>
                             Filtros
                         </h2>
-                        <button id="toggleFiltros" class="flex items-center gap-1 text-gray-700 hover:text-red-500 transition-colors duration-200 focus:outline-none">
+                        <button id="toggleFiltros" class="flex hover:cursor-pointer items-center gap-1 text-gray-700 hover:text-red-500 transition-colors duration-200 focus:outline-none">
                             <span class="text-sm font-medium">Mostrar filtros</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -73,11 +73,6 @@ const categorias = [...new Set(Productos?.map((p) => p.Categoria))];
                                     <option value="">Todas las Marcas</option>
                                     {marcas.map((m) => <option value={m}>{m}</option>)}
                                 </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </div>
                             </div>
                         </div>
 
@@ -91,11 +86,6 @@ const categorias = [...new Set(Productos?.map((p) => p.Categoria))];
                                     <option value="">Todos los Estilos</option>
                                     {estilos.map((e) => <option value={e}>{e}</option>)}
                                 </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </div>
                             </div>
                         </div>
 
@@ -109,11 +99,6 @@ const categorias = [...new Set(Productos?.map((p) => p.Categoria))];
                                     <option value="">Todas las Categorias</option>
                                     {categorias.map((c) => <option value={c}>{c}</option>)}
                                 </select>
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                    </svg>
-                                </div>
                             </div>
                         </div>
 
@@ -178,11 +163,6 @@ const categorias = [...new Set(Productos?.map((p) => p.Categoria))];
                             <option value="nombreAsc">Nombre: A-Z</option>
                             <option value="nombreDesc">Nombre: Z-A</option>
                         </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
                     </div>
                 </div>
             </div>
