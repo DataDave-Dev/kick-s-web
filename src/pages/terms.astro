@@ -1,0 +1,488 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionContainer from "../components/SectionContainer.astro";
+---
+
+<Layout title="Términos y Condiciones">
+    <SectionContainer class="py-25 px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Términos y Condiciones
+                </h1>
+                <p class="text-gray-600 text-lg">
+                    Última actualización: {
+                        new Date().toLocaleDateString("es-MX")
+                    }
+                </p>
+            </div>
+
+            <div
+                class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 space-y-8"
+            >
+                <!-- Condiciones de Compra -->
+                <section>
+                    <h2
+                        class="text-2xl font-bold text-gray-900 mb-4 flex items-center"
+                    >
+                        <svg
+                            class="h-6 w-6 text-red-500 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.293 2.293A1 1 0 006.414 17h11.172a1 1 0 00.707-1.707L16 13M7 13V6a1 1 0 011-1h5a1 1 0 011 1v7"
+                            ></path>
+                        </svg>
+                        Condiciones de Compra
+                    </h2>
+                    <div class="space-y-4 text-gray-700">
+                        <p>
+                            • Los precios se encuentran en moneda nacional e
+                            incluyen I.V.A.
+                        </p>
+                        <p>
+                            • Las imágenes, características, especificaciones y
+                            precios son ilustrativos y pueden variar o cambiar
+                            sin previo aviso.
+                        </p>
+                        <p>
+                            • Todos los productos que se ofrecen se encuentran
+                            sujetos a disponibilidad y hasta agotar existencias,
+                            el stock publicado en la plataforma web puede variar
+                            o cambiar sin previo aviso.
+                        </p>
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-gray-900 mb-2">
+                                Las compras deberán realizarse solo de las
+                                siguientes formas:
+                            </h3>
+                            <ol class="list-decimal list-inside space-y-1">
+                                <li>
+                                    Acudiendo a nuestra sucursal en Monterrey
+                                </li>
+                                <li>
+                                    Generando un pedido en nuestra página web
+                                    www.https://kick-s-web.vercel.app/
+                                </li>
+                                <li>
+                                    Por medio de una cotización formal
+                                    solicitada vía correo electrónico
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div
+                            class="bg-red-50 p-4 rounded-lg border border-red-100"
+                        >
+                            <h3 class="font-semibold text-red-900 mb-2">
+                                Kick's se reserva el derecho de cancelar pedidos
+                                en los siguientes supuestos:
+                            </h3>
+                            <ul class="space-y-1 text-red-800">
+                                <li>
+                                    <strong>A)</strong> Cuando el usuario viole o
+                                    no acepte estos términos y condiciones.
+                                </li>
+                                <li>
+                                    <strong>B)</strong> Cuando el usuario no haya
+                                    cubierto el monto exacto de la compra.
+                                </li>
+                                <li>
+                                    <strong>C)</strong> Si por algún error involuntario
+                                    del sistema se calcule mal el costo total del
+                                    pedido.
+                                </li>
+                                <li>
+                                    <strong>D)</strong> Cuando el pago sea identificado
+                                    como fraude o posible contra cargo.
+                                </li>
+                                <li>
+                                    <strong>E)</strong> Cuando el producto pagado
+                                    se encuentre agotado en el stock interno.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Envíos -->
+                <section>
+                    <h2
+                        class="text-2xl font-bold text-gray-900 mb-4 flex items-center"
+                    >
+                        <svg
+                            class="h-6 w-6 text-red-500 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+                            ></path>
+                        </svg>
+                        Envíos
+                    </h2>
+                    <div class="space-y-4 text-gray-700">
+                        <p>
+                            <strong>1.</strong> El tiempo estimado de entrega puede
+                            variar dependiendo si su compra es en temporada alta,
+                            promociones o estilos con alta demanda. Los tiempos se
+                            notificarán al usuario mediante correo electrónico a
+                            partir de la confirmación de compra.
+                        </p>
+
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-blue-900 mb-2">
+                                Paqueterías disponibles:
+                            </h3>
+                            <p class="text-blue-800">
+                                ESTAFETA, FEDEX, DHL y Kanguus (exclusiva para
+                                ZMM)
+                            </p>
+                        </div>
+
+                        <p>
+                            <strong>2.</strong> El lugar de entrega será el domicilio
+                            señalado por el usuario en la página web, con las siguientes
+                            excepciones:
+                        </p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li>
+                                <strong>2.1</strong> Pagos por Mercado Pago: debe
+                                ser domicilio fijo del usuario (no servicio OCURRE)
+                            </li>
+                            <li>
+                                <strong>2.2</strong> Pagos por PayPal: debe ser el
+                                domicilio señalado en PayPal
+                            </li>
+                        </ul>
+
+                        <p>
+                            <strong>3.</strong> Si el pedido no llega en el plazo
+                            fijado, contactar a: https://kick-s-web.vercel.app/ o al 5598349727
+                        </p>
+                        <p>
+                            <strong>4.</strong> Los números de rastreo se enviarán
+                            por correo electrónico
+                        </p>
+                        <p>
+                            <strong>5.</strong> Cuenta con 48 horas después de recibir
+                            su compra para reportar irregularidades a: https://kick-s-web.vercel.app/
+                        </p>
+
+                        <div
+                            class="bg-yellow-50 p-4 rounded-lg border border-yellow-200"
+                        >
+                            <p class="text-yellow-800">
+                                <strong>Días hábiles:</strong> Lunes a viernes de
+                                9:00 AM a 6:30 PM
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Compras con Cupones -->
+                <section>
+                    <h2
+                        class="text-2xl font-bold text-gray-900 mb-4 flex items-center"
+                    >
+                        <svg
+                            class="h-6 w-6 text-red-500 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
+                            ></path>
+                        </svg>
+                        Compras con Cupones
+                    </h2>
+                    <div class="space-y-3 text-gray-700">
+                        <p>
+                            Los cupones de descuento están sujetos a las
+                            siguientes restricciones:
+                        </p>
+                        <ul class="list-disc list-inside ml-4 space-y-2">
+                            <li>Cuentan con fecha de vigencia específica</li>
+                            <li>Pueden requerir método de pago específico</li>
+                            <li>Están sujetos a cantidad limitada</li>
+                            <li>
+                                Kick's no está obligado a respetar cupones
+                                cuando no se cumplan los términos
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Entrega en Tienda -->
+                <section>
+                    <h2
+                        class="text-2xl font-bold text-gray-900 mb-4 flex items-center"
+                    >
+                        <svg
+                            class="h-6 w-6 text-red-500 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                            ></path>
+                        </svg>
+                        Entrega en Tienda
+                    </h2>
+                    <div class="space-y-3 text-gray-700">
+                        <p>
+                            La entrega en nuestra sucursal de Monterrey permite
+                            evitar costos de envío.
+                        </p>
+                        <div class="bg-gray-50 p-4 rounded-lg space-y-2">
+                            <p>
+                                <strong>Mercado Pago:</strong> Solo puede recoger
+                                el titular de la cuenta (mayor de edad con INE original)
+                            </p>
+                            <p>
+                                <strong>PayPal:</strong> No disponible entrega en
+                                sucursal por políticas de protección
+                            </p>
+                            <p>
+                                <strong>Verificar stock:</strong> Contactar a https://kick-s-web.vercel.app/
+                                o 81312847250 antes de acudir
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Cancelaciones y Modificaciones -->
+                <section>
+                    <h2
+                        class="text-2xl font-bold text-gray-900 mb-4 flex items-center"
+                    >
+                        <svg
+                            class="h-6 w-6 text-red-500 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                            ></path>
+                        </svg>
+                        Cancelaciones y Modificaciones
+                    </h2>
+                    <div class="space-y-3 text-gray-700">
+                        <p>
+                            • Una vez que el pedido esté en tránsito no será
+                            posible cancelar
+                        </p>
+                        <p>
+                            • Máximo 3 modificaciones por pedido en un lapso de
+                            12 horas después del pago
+                        </p>
+                        <p>
+                            • Las modificaciones después de este tiempo
+                            requieren cancelación completa
+                        </p>
+                        <p>
+                            • El reembolso se procesará según los tiempos
+                            indicados por el vendedor asignado
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Devoluciones -->
+                <section>
+                    <h2
+                        class="text-2xl font-bold text-gray-900 mb-4 flex items-center"
+                    >
+                        <svg
+                            class="h-6 w-6 text-red-500 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                            ></path>
+                        </svg>
+                        Formas de Devolución de Productos
+                    </h2>
+                    <div class="space-y-3 text-gray-700">
+                        <div
+                            class="bg-red-50 p-4 rounded-lg border border-red-100"
+                        >
+                            <p class="text-red-800 font-semibold">
+                                LOS PRODUCTOS SOBRE PEDIDO NO PODRÁN SER
+                                DEVUELTOS SIN EXCEPCIÓN ALGUNA.
+                            </p>
+                        </div>
+                        <ul class="list-disc list-inside ml-4 space-y-2">
+                            <li>
+                                El producto debe estar sellado y en condiciones
+                                óptimas
+                            </li>
+                            <li>
+                                Solicitud de devolución máximo 24 horas después
+                                de la compra
+                            </li>
+                            <li>
+                                No se aceptan devoluciones parciales de
+                                paquetes, combos o bundles
+                            </li>
+                            <li>
+                                Productos abiertos tendrán depreciación según
+                                determine el vendedor
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Preventas -->
+                <section>
+                    <h2
+                        class="text-2xl font-bold text-gray-900 mb-4 flex items-center"
+                    >
+                        <svg
+                            class="h-6 w-6 text-red-500 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
+                        </svg>
+                        Preventas
+                    </h2>
+                    <div class="space-y-3 text-gray-700">
+                        <p>
+                            <strong>1.</strong> El precio será respetado siempre
+                            que el pago se realice dentro de las 48 horas
+                        </p>
+                        <p>
+                            <strong>2.</strong> Stock específico limitado - sin obligación
+                            de conseguir más producto
+                        </p>
+                        <p>
+                            <strong>3.</strong> Tiempo de entrega variable - se confirmará
+                            por Kick's
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Garantías -->
+                <section>
+                    <h2
+                        class="text-2xl font-bold text-gray-900 mb-4 flex items-center"
+                    >
+                        <svg
+                            class="h-6 w-6 text-red-500 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                            ></path>
+                        </svg>
+                        Garantías
+                    </h2>
+                    <div class="space-y-4 text-gray-700">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-blue-800">
+                                <strong>Tiempo de respuesta:</strong> 2 a 7 días
+                                hábiles una vez recibido el producto
+                            </p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <p><strong>Requisitos para garantía:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>Caja y empaques originales</li>
+                                <li>Todos los accesorios y componentes</li>
+                                <li>Copia del ticket de compra</li>
+                                <li>Póliza de garantía</li>
+                            </ul>
+                        </div>
+
+                        <div
+                            class="bg-yellow-50 p-4 rounded-lg border border-yellow-200"
+                        >
+                            <p class="text-yellow-800">
+                                <strong>Daño por paquetería:</strong> Reportar en
+                                48 horas a https://kick-s-web.vercel.app/
+                            </p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <p><strong>Importante:</strong></p>
+                            <ul class="list-disc list-inside ml-4 space-y-1">
+                                <li>
+                                    Kick's no se responsabiliza por daños
+                                    durante traslado vía paquetería
+                                </li>
+                                <li>
+                                    No se reciben productos con daño físico
+                                    ocasionado por el cliente
+                                </li>
+                                <li>Solo productos adquiridos en Kick's</li>
+                                <li>
+                                    Contactar primero a https://kick-s-web.vercel.app/ antes de
+                                    enviar productos
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contacto -->
+                <section class="bg-gray-50 p-6 rounded-lg">
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">
+                        Información de Contacto
+                    </h2>
+                    <div class="space-y-2 text-gray-700">
+                        <p><strong>Correo:</strong> https://kick-s-web.vercel.app/</p>
+                        <p><strong>Teléfono Monterrey:</strong> 81312847250</p>
+                        <p><strong>Teléfono General:</strong> 5598349727</p>
+                        <p><strong>Sitio Web:</strong> www.https://kick-s-web.vercel.app/</p>
+                    </div>
+                </section>
+
+                <div class="text-center pt-8 border-t border-gray-200">
+                    <p class="text-sm text-gray-500">
+                        Al realizar una compra, usted acepta estos términos y
+                        condiciones en su totalidad.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </SectionContainer>
+</Layout>
